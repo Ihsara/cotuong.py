@@ -45,8 +45,9 @@ class Chess(object):
     def fen_string_syntax_verification(self, fen):
         '''
         FEN verification string syntax check:
+        (number) is the exception message numbered
 
-        FEN string contains either 6 parts (DEFAULT) or 4 parts (*To be included in later):
+        FEN string contains either 6 parts (DEFAULT) or 4 parts (*To be included in later)(1):
         1/ Chesspiece arrangement string
         2/ Color of side to make the next move. Default: White (Red) always go first.
         3/ Must be "-" (make redundant in 4-part FEN)
@@ -57,14 +58,14 @@ class Chess(object):
         Conditions for each part (I - VI):
         I/ Chesspiece arrangement string
 
-        _ Contains 10 rows seperated by a "/" each (1)
-        _ Symbols are within self.SYMBOLS(2)
-        _ Symbol(s) and number sum up to 9 for each row (3)
-        _ The amount of each symbols must not be more than the allocated number of pieces (4)
+        _ Contains 10 rows seperated by a "/" each (2)
+        _ Symbols are within self.SYMBOLS(3)
+        _ Symbol(s) and number sum up to 9 for each row (4)
+        _ The amount of each symbols must not be more than the allocated number of pieces (5)
 
         II/ Color of side to make the next move
-        _ Must be either black(b) or white(w) (5)
-        _ On set up is the same as in self.DEFAULT_SETUP, white(w) must always be in this part (6)
+        _ Must be either black(b) or white(w) (6)
+        _ On set up is the same as in self.DEFAULT_SETUP, white(w) must always be in this part (7)
         _ Must be lowercase. Fix into lowercase when found (Act as WARNING, do not raise exception)
 
         III/ Redundant Relics
@@ -73,7 +74,7 @@ class Chess(object):
 
         V/ To be later defined. Need to read rules.
         VI/ Turn
-        _ Must be integer (7)
+        _ Must be integer (8)
 
         List of exceptions:
         (1)FEN string has more/less than needed parts. \n Must have either 6 or 4 parts
