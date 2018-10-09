@@ -96,6 +96,7 @@ class Chess(object):
         is_starting_position = FALSE
 
         #poorly written, works nonetheless
+        #I/ Chesspiece arrangement string
         try:
             set_up, turn_color, rr1, rr2, half_piece, turn = fen.split(' ')
         except ValueError:
@@ -138,7 +139,8 @@ class Chess(object):
 
                 if dist_check[self.GENERAL] == 1 or dist_check[self.GENERAL.upper()] == 1 :
                     print("FEN validation error: Each side's general must be presented with 1 as the quantity({missing_piece}).".format(
-                        missing_piece = [mgen for mgen in [self.GENERAL, self.GENERAL.upper()] if dist_check[mgen] ==1][0])
+                        missing_piece = [mgen for mgen in [self.GENERAL, self.GENERAL.upper()] if dist_check[mgen] ==1])
+                    raise
 
                 for chesspiece in dist_check:
                     if dist_check[chesspiece] < 0 :
@@ -146,6 +148,25 @@ class Chess(object):
                             piecename=chesspiece,
                              piecename_counted_num = dist_check[chesspiece],
                               piecename_allowed_num = self.CHESSPIECE_DISTRIBUTION_NUMBER[chesspiece])
+                        raise
+
+        #II/ Color of side to make the next move
+        if set_up == self.DEFAULT_SETUP :
+            is_starting_position = True
+
+        if turn_color in [self.BLACK, self.WHITE]:
+            if turn_color.isupper(): turn_color.lower()
+            if is_starting_position:
+                if turn_color != self.WHITE:
+                    print("FEN validation error: Starting setup detected(all pieces at starting positions), white(red) side must be the next to move.")
+                    raise
+        else:
+            print("FEN validation error: Wrong color encoding for sides. Must either be black(b) or white(w).")
+            raise
+        #V/ To be later defined. Need to read rules about half move
+        #VI/ Turn
+
+
 
 
 
