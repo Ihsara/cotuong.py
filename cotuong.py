@@ -165,6 +165,19 @@ class Chess(object):
             raise
         #V/ To be later defined. Need to read rules about half move
         #VI/ Turn
+        try:
+            turn_int = int(turn)
+        except ValueError:
+            print("FEN validation error: Turn must be an positive integer starting from 1.")
+            raise
+
+        if turn_int != 1 and is_starting_position:
+            print("FEN validation error: Turn must be an positive integer starting from 1.")
+            raise
+        elif turn_int < 1:
+            print("FEN validation error: Turn must be an positive integer starting from 1.")
+            raise
+
 
 
 
