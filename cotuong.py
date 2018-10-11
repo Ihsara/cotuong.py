@@ -178,13 +178,6 @@ class Chess(object):
             print("FEN validation error: Turn must be an positive integer starting from 1.")
             raise
 
-
-
-
-
-
-
-
     def fen_string_to_board(self);
         '''
         Have FEN string translated into a BOARD array
@@ -204,4 +197,39 @@ class Chess(object):
     def ascii(self):
         self.fen_string = self.board_to_fen_string()
         pass
+
+
+class chessPiece(object):
+    def __init__(self, fen_notation_name):
+        self.WHITE = 'w' #Represent red side
+        self.BLACK = 'b' #Represent blue side
+
+        self.EMPTY = -1
+        self.REFERENCE_LIST = {
+            'a':'Advisor'
+            'c': 'Chariot'
+            'e': 'Elephant'
+            'g': 'General'
+            'h': 'Horse'
+            'p': 'Pawn'
+            'r': 'Rook'
+        }
+
+        self.id = fen_notation_name
+        self.name = self.identify ()
+        self.history = []
+
+    def identify(self):
+        side = ''
+        if self.id.isupper():
+            side = self.BLACK
+        else: side = self.WHITE
+        return {'type': self.REFERENCE_LIST[self.id],'side': side}
+
+    def add_move(self, move)
+        self.history.append(move)
+
+    def undo_move(self)
+        self.history.pop()
+
 
