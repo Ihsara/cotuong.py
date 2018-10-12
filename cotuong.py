@@ -34,15 +34,28 @@ class Chess(object):
 
         self.DEFAULT_FEN_STARTING_SETUP = "rheagaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAGAEHR w - - - 1"
 
-        self.BOARD = np.zeros((10, 9), dtype=int)
-
         self.DEFAULT_POSITIONS = {}
 
         self.CHESSPIECE_DISTRIBUTION_NUMBER = dict(zip(self.SYMBOLS, self.SYMBOLS_DIST))
 
+        self.NUMERICAL_BOARD_GRID = [
+            [11,12,13,14,15,16,17,18,19],
+            [21,22,23,24,25,26,27,28,29],
+            [31,32,33,34,35,36,37,38,39],
+            [41,42,43,44,45,46,47,48,49],
+            [51,52,53,54,55,56,57,58,59],
+            [61,62,63,64,65,66,67,68,69],
+            [71,72,73,74,75,76,77,78,79],
+            [81,82,83,84,85,86,87,88,89],
+            [91,92,93,94,95,96,97,98,99],
+            [101,102,103,104,105,106,107,108,109]
+        ]
+
         self.header = {}
         self.history = []
 
+        self.BOARD = self.init_board()
+        self.BOARD_NUMERICAL = self.init_board_numerical()
         self.fen = self.fen_string_syntax_verification(fen)
 
     def fen_string_syntax_verification(self, fen):
@@ -177,6 +190,25 @@ class Chess(object):
         elif turn_int < 1:
             print("FEN validation error: Turn must be an positive integer starting from 1.")
             raise
+
+    def init_board(self):
+        base_array = np.zeros((12, 11), dtype="U25")
+        base_array[0] = '*'
+        base_array[:,10] = '*'
+        base_array[:,0] = '*'
+        base_array[11] = '*'
+        return base_array
+
+    def init_board_numerical(self);
+        base_array       = np.zeros((12, 11), dtype=int)
+        base_array[0]    = -1
+        base_array[:,10] = -1
+        base_array[:,0]  = -1
+        base_array[11]   = -1
+        return base_array
+
+    def init_new_game(self):
+        pass
 
     def fen_string_to_board(self);
         '''
