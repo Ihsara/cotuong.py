@@ -9,7 +9,7 @@ ASCII playable chessboard
 
 """
 
-
+import numpy as np
 import re
 
 class Chess(object):
@@ -51,12 +51,30 @@ class Chess(object):
             [101,102,103,104,105,106,107,108,109]
         ]
 
-        self.header = {}
-        self.history = []
+        self.IS_FEN_VALIDATED = True
 
-        self.BOARD = self.init_board()
-        self.BOARD_NUMERICAL = self.init_board_numerical()
-        self.fen = self.fen_string_syntax_verification(fen)
+        self.chessPieceSetUp, self.turnColor,self.halfTurn, self.turnInt  = self.fen_string_syntax_verification(fen)
+        if self.IS_FEN_VALIDATED:
+
+            self.header = {
+                'turn' : self.turnInt,
+                'turnColor':self.turnColor,
+                'halfTurn': self.halfTurn
+            }
+            self.history = [self.turnInt]
+
+            if fen == '':
+                self.chessPieceSetUp = self.DEFAULT_SETUP
+                print("No fen string inserted. Object Chess is initialized to the begning.")
+            else:
+                print("Chess object now at {}. {} goes next. This game is recorded on turn {}".format(
+                    self.chessPieceSetUp,
+                    self.turnColor,
+                    self.turnInt))
+            self.BOARD = self.init_board()
+            self.BOARD_NUMERICAL = self.init_board_numerical()
+        else:
+            print('fen string has problem. Please init Chess object with vilid FEN sring')
 
     def fen_string_syntax_verification(self, fen):
         '''
@@ -106,7 +124,7 @@ class Chess(object):
         (9)Starting setup detected(all pieces at starting positions), white(red) side must be the next to move.
         (10)Turn must be an positive integer starting from 1.
         '''
-        is_starting_position = FALSE
+        is_starting_position = False
 
         #poorly written, works nonetheless
         #I/ Chesspiece arrangement string
@@ -117,18 +135,21 @@ class Chess(object):
                 set_up, turn_color, half_piece, turn = fen.split(' ')
             except ValueError:
                 print("FEN validation error: FEN string has more/less than needed parts. \n Must have either 6 or 4 parts")
-                raise
-
+                self.IS_FEN_VALIDATED = False
+        if rr1 != '-' or rr2 != '-':
+            print('FEN warning: Need "-", have "{}{}"'.format(
+                rr1, rr2
+            ) )
         rows = set_up.split('/')
         dist_check = self.CHESSPIECE_DISTRIBUTION_NUMBER
         if len(rows) != 10:
             print("FEN validation error: Number of row is not 10 ( is {})".format(len(rows)))
-            raise
+            self.IS_FEN_VALIDATED = False
 
         for row in rows:
             if len(row) > 9 or (len(row)== 1 and row[0] != '9'):
                 print("FEN validation error:  Row '{}' has more/less than 9 items.".format(row))
-                raise
+                self.IS_FEN_VALIDATED = False
             else:
                 items = list(row)
                 sum_check = 0
@@ -138,30 +159,30 @@ class Chess(object):
                             sum_check += int(item)
                         else:
                             print("FEN validation error: FEN notation cannot contain number 0")
-                            raise
+                            self.IS_FEN_VALIDATED = False
                     except ValueError:
-                        if item is in self.SYMBOLS:
+                        if item in self.SYMBOLS:
                             sum_check += 1
                             dist_check[item] -= 1
                         else:
                             print("FEN validation error: Unrecognized symbol ({}) for a chesspiece.\n Must be included in ({})".format(item,self.SYMBOLS))
-                            raise
+                            self.IS_FEN_VALIDATED = False
                 if sum_check != 9:
                     print("FEN validation error: Row {} has more/less than 9 items.".format(items))
-                    raise
+                    self.IS_FEN_VALIDATED = False
 
                 if dist_check[self.GENERAL] == 1 or dist_check[self.GENERAL.upper()] == 1 :
                     print("FEN validation error: Each side's general must be presented with 1 as the quantity({missing_piece}).".format(
-                        missing_piece = [mgen for mgen in [self.GENERAL, self.GENERAL.upper()] if dist_check[mgen] ==1])
-                    raise
+                        missing_piece = [mgen for mgen in [self.GENERAL, self.GENERAL.upper()] if dist_check[mgen] ==1]))
+                    self.IS_FEN_VALIDATED = False
 
                 for chesspiece in dist_check:
                     if dist_check[chesspiece] < 0 :
                         print("FEN validation error: {piecename} has more pieces than allowed({piecename_counted_num} from {piecename_allowed_num}).".format(
                             piecename=chesspiece,
                              piecename_counted_num = dist_check[chesspiece],
-                              piecename_allowed_num = self.CHESSPIECE_DISTRIBUTION_NUMBER[chesspiece])
-                        raise
+                              piecename_allowed_num = self.CHESSPIECE_DISTRIBUTION_NUMBER[chesspiece]))
+                        self.IS_FEN_VALIDATED = False
 
         #II/ Color of side to make the next move
         if set_up == self.DEFAULT_SETUP :
@@ -172,24 +193,26 @@ class Chess(object):
             if is_starting_position:
                 if turn_color != self.WHITE:
                     print("FEN validation error: Starting setup detected(all pieces at starting positions), white(red) side must be the next to move.")
-                    raise
+                    self.IS_FEN_VALIDATED = False
         else:
             print("FEN validation error: Wrong color encoding for sides. Must either be black(b) or white(w).")
-            raise
+            self.IS_FEN_VALIDATED = False
         #V/ To be later defined. Need to read rules about half move
         #VI/ Turn
         try:
             turn_int = int(turn)
         except ValueError:
             print("FEN validation error: Turn must be an positive integer starting from 1.")
-            raise
+            self.IS_FEN_VALIDATED = False
 
         if turn_int != 1 and is_starting_position:
             print("FEN validation error: Turn must be an positive integer starting from 1.")
-            raise
+            self.IS_FEN_VALIDATED = False
         elif turn_int < 1:
             print("FEN validation error: Turn must be an positive integer starting from 1.")
-            raise
+            self.IS_FEN_VALIDATED = False
+
+        return set_up, turn_color, half_piece, turn_int
 
     def init_board(self):
         base_array = np.zeros((12, 11), dtype="U25")
@@ -199,7 +222,7 @@ class Chess(object):
         base_array[11] = '*'
         return base_array
 
-    def init_board_numerical(self);
+    def init_board_numerical(self):
         base_array       = np.zeros((12, 11), dtype=int)
         base_array[0]    = -1
         base_array[:,10] = -1
@@ -207,10 +230,10 @@ class Chess(object):
         base_array[11]   = -1
         return base_array
 
-    def init_new_game(self):
+    def load_game(self):
         pass
 
-    def fen_string_to_board(self);
+    def fen_string_to_board(self):
         '''
         Have FEN string translated into a BOARD array
         '''
@@ -238,12 +261,12 @@ class chessPiece(object):
 
         self.EMPTY = -1
         self.REFERENCE_LIST = {
-            'a':'Advisor'
-            'c': 'Chariot'
-            'e': 'Elephant'
-            'g': 'General'
-            'h': 'Horse'
-            'p': 'Pawn'
+            'a':'Advisor',
+            'c': 'Chariot',
+            'e': 'Elephant',
+            'g': 'General',
+            'h': 'Horse',
+            'p': 'Pawn',
             'r': 'Rook'
         }
 
@@ -258,10 +281,10 @@ class chessPiece(object):
         else: side = self.WHITE
         return {'type': self.REFERENCE_LIST[self.id],'side': side}
 
-    def add_move(self, move)
+    def add_move(self, move):
         self.history.append(move)
 
-    def undo_move(self)
+    def undo_move(self):
         self.history.pop()
 
 
