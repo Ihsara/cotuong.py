@@ -52,7 +52,11 @@ class Chess(object):
 
         self.IS_FEN_VALIDATED = True
 
+        if fen == '':
+            fen = self.DEFAULT_FEN_STARTING_SETUP
+            print("No fen string inserted. Object Chess is initialized to the begning.")
         self.chessPieceSetUp, self.turnColor,self.halfTurn, self.turnInt  = self.fen_string_syntax_verification(fen)
+
         if self.IS_FEN_VALIDATED:
 
             self.header = {
@@ -61,19 +65,14 @@ class Chess(object):
                 'halfTurn': self.halfTurn
             }
             self.history = [self.turnInt]
-
-            if fen == '':
-                self.chessPieceSetUp = self.DEFAULT_SETUP
-                print("No fen string inserted. Object Chess is initialized to the begning.")
-            else:
-                print("Chess object now at {}. {} goes next. This game is recorded on turn {}".format(
+            self.BOARD = self.init_board()
+            self.BOARD_NUMERICAL = self.init_board_numerical()
+            print("Chess object now is {}.\n{} goes next.\nThis game is recorded on turn {}".format(
                     self.chessPieceSetUp,
                     self.turnColor,
                     self.turnInt))
-            self.BOARD = self.init_board()
-            self.BOARD_NUMERICAL = self.init_board_numerical()
         else:
-            print('fen string has problem. Please init Chess object with vilid FEN sring')
+            print('fen string has problem. Please init Chess object with valid FEN sring')
 
     def fen_string_syntax_verification(self, fen):
         '''
