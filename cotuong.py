@@ -1,16 +1,15 @@
-"""
-
+# -*- coding: utf-8 -*-
+'''
 cotuong.py: verifier and things like that for cờ tướng(xiangqi)
 
 TO DO:
 Verification: move, notation(FEN, ...)
 ASCII playable chessboard
-
-
-"""
+'''
 
 import numpy as np
 import re
+import string
 
 class Chess(object):
     def __init__(self, fen=""):
@@ -125,7 +124,8 @@ class Chess(object):
         (10)Turn must be an positive integer starting from 1.
         '''
         is_starting_position = False
-
+        set_up = turn_color = rr1= rr2 = half_piece = turn = ''
+        turn_int = 0
         #poorly written, works nonetheless
         #I/ Chesspiece arrangement string
         try:
@@ -167,22 +167,24 @@ class Chess(object):
                         else:
                             print("FEN validation error: Unrecognized symbol ({}) for a chesspiece.\n Must be included in ({})".format(item,self.SYMBOLS))
                             self.IS_FEN_VALIDATED = False
+
                 if sum_check != 9:
                     print("FEN validation error: Row {} has more/less than 9 items.".format(items))
                     self.IS_FEN_VALIDATED = False
 
-                if dist_check[self.GENERAL] == 1 or dist_check[self.GENERAL.upper()] == 1 :
+        for cp, pa in dist_check.items() :
+            if cp != 'g' or cp != 'G':
+                if pa != 0:
                     print("FEN validation error: Each side's general must be presented with 1 as the quantity({missing_piece}).".format(
-                        missing_piece = [mgen for mgen in [self.GENERAL, self.GENERAL.upper()] if dist_check[mgen] ==1]))
+                            missing_piece = [mgen for mgen in [self.GENERAL, self.GENERAL.upper()] if dist_check[mgen] != 0]))
                     self.IS_FEN_VALIDATED = False
-
-                for chesspiece in dist_check:
-                    if dist_check[chesspiece] < 0 :
-                        print("FEN validation error: {piecename} has more pieces than allowed({piecename_counted_num} from {piecename_allowed_num}).".format(
-                            piecename=chesspiece,
-                             piecename_counted_num = dist_check[chesspiece],
-                              piecename_allowed_num = self.CHESSPIECE_DISTRIBUTION_NUMBER[chesspiece]))
-                        self.IS_FEN_VALIDATED = False
+            else:
+                if pa< 0:
+                    print("FEN validation error: {piecename} has more pieces than allowed({piecename_counted_num} from {piecename_allowed_num}).".format(
+                                piecename=cp,
+                                piecename_counted_num = PendingDeprecationWarning,
+                                piecename_allowed_num = self.CHESSPIECE_DISTRIBUTION_NUMBER[cp]))
+                    self.IS_FEN_VALIDATED = False
 
         #II/ Color of side to make the next move
         if set_up == self.DEFAULT_SETUP :
@@ -215,6 +217,9 @@ class Chess(object):
         return set_up, turn_color, half_piece, turn_int
 
     def init_board(self):
+        '''
+        ascii version of board
+        '''
         base_array = np.zeros((12, 11), dtype="U25")
         base_array[0] = '*'
         base_array[:,10] = '*'
@@ -223,6 +228,9 @@ class Chess(object):
         return base_array
 
     def init_board_numerical(self):
+        '''
+        Return numerical version of board
+        '''
         base_array       = np.zeros((12, 11), dtype=int)
         base_array[0]    = -1
         base_array[:,10] = -1
@@ -233,11 +241,17 @@ class Chess(object):
     def load_game(self):
         pass
 
-    def fen_string_to_board(self):
+    def fen_string_to_board_numerical(self):
         '''
         Have FEN string translated into a BOARD array
         '''
-        pass
+        for row in range (1, 11):
+            temp_row = self.chessPieceSetUp[row -1]
+            for element in self.chessPieceSetUp[row - 1]:
+                if element in string.digits:
+                    mark = int(element)
+
+
 
     def board_to_fen_string(self):
         '''
@@ -288,3 +302,6 @@ class chessPiece(object):
         self.history.pop()
 
 
+if __name__ == "__main__":
+    print("Xiangqi verification program!")
+    test_chess_game = Chess("rheagaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAGAEHR w - - - 1")
