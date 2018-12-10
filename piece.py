@@ -44,6 +44,9 @@ class PieceBase(PieceConst):
             self.encoded_name = self.name[0].upper() 
         else: 
             self.encoded_name = self.FAILED_TO_ASSIGN_SIDE
+            ans = False
+
+        return self.side
 
     def __str__(self):
         return "{} - {}".format(self.name, self.description)

@@ -3,6 +3,7 @@ Test Game objects when display on cli
 """
 
 from unittest import TestCase
+from pprint import pprint
 
 from cotuong import Game 
 
@@ -11,4 +12,4 @@ class GameInCLI(TestCase):
         self.game = Game()
 
     def test_starter_pos_in_cli(self):
-        pass
+        pprint(self.game.cli_view())

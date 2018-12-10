@@ -29,14 +29,46 @@ class Game(ConstBase):
             self.PAWN    : Pawn,
             self.ROOK    : Rook
         }
+        self.is_starter = True
+        self.turn = 0
 
         if set_up != '':
-            self.board_array = self.set_board_array(set_up)
+            self.red_side, self.black_side, self.units_dict = self._init_starting_units_with_setup(set_up)
         else: 
-            self.board_array = self.init_board_array()
+            self.red_side, self.black_side, self.units_dict = self._init_starting_units_without_setup()
 
-    def init_board_array(self):
-        pass
+    def translate_to_board_array(self):
+        """
+            Use the self.units_dict to translate into an array similar to self.NUMERICAL_BOARD_GRID 
+        """
+        self.red_side   = RedSide() 
+        self.black_side = BlackSide() 
+
+        board_array = []
+
+
+
+        return board_array
+
+    def _init_starting_units_without_setup(self): 
+        red_side   = RedSide()
+        black_side = BlackSide()
+
+        units_dict = {
+            red_side.name: red_side.army,
+            black_side.name: black_side.army
+        }
+
+        return red_side, black_side, units_dict 
+
+    def _init_starting_units_with_setup(self, setup): 
+        red_side   = RedSide()
+        black_side = BlackSide()
+
+        units_dict = {}
+
+        return red_side, black_side, units_dict
+
 
     def set_board_array(self, set_up):
         return [] 
@@ -46,8 +78,14 @@ class Game(ConstBase):
         board_array = np.zeros_like(a=self.NUMERICAL_BOARD_GRID, dtype=str).tolist()
         # board_array = np.zeros_like(a=self.NUMERICAL_BOARD_GRID, dtype=int).tolist()
         # board_array = np.zeros(dtype=int,shape=(12, 11)).tolist()
-        for piece in self.STARTING_COORDS: 
-            coords = self.STARTING_COORDS[piece]
+        if self.is_starter: 
+            coords_mapping = self.STARTING_COORDS
+            self.is_starter = False
+        else: 
+            coords_mapping = self.coords_mapping
+
+        for piece in coords_mapping: 
+            coords = coords_mapping[piece]
             for side in coords:
                 for pos in coords[side]:
                     x = pos%self.NUMERICAL_DIVIDER_SERPERATING_X_AND_Y
@@ -61,7 +99,7 @@ class Game(ConstBase):
                 if board_array[yy][xx] == '':
                     board_array[yy][xx] = ' '
 
-        return board_array 
+        return board_array
 
     
 if __name__ == '__main__':

@@ -44,6 +44,8 @@ class ConstBase(object):
             [110,111,112,113,114,115,116,117,118,119,1110]
         ]
 
+
+        #TO BE REWRITED TO MATCH SideArmy obj
         self.STARTING_COORDS = {
             self.ADVISOR: {
                 self.WHITE: [104,106],
@@ -81,7 +83,6 @@ class ConstBase(object):
             },
 
         }
-
 
     def __str__(self):
         return "Constants are loaded."
