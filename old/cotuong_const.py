@@ -44,44 +44,66 @@ class ConstBase(object):
             [110,111,112,113,114,115,116,117,118,119,1110]
         ]
 
-
+        self.OUT_OF_COMBAT_WHITE_POS = 0 
+        self.OUT_OF_COMBAT_BLACK_POS = 1110 
         #TO BE REWRITED TO MATCH SideArmy obj
+        # self.STARTING_COORDS = {
+        #     self.ADVISOR: {
+        #         self.WHITE: [104,106],
+        #         self.BLACK: [14,16]
+        #     },
+
+        #     self.CANNON: {
+        #         self.WHITE: [82,88],
+        #         self.BLACK: [32,38]
+        #     },
+
+        #     self.ELEPHANT: {
+        #         self.WHITE: [103,107],
+        #         self.BLACK: [13,17]
+        #     },
+
+        #     self.GENERAL: {
+        #         self.WHITE: [105],
+        #         self.BLACK: [15]
+        #     },
+
+        #     self.HORSE: {
+        #         self.WHITE: [102,108],
+        #         self.BLACK: [12,18]
+        #     },
+
+        #     self.PAWN: {
+        #         self.WHITE: [71,73,75,77,79],
+        #         self.BLACK: [41,43,45,47,49]
+        #     },
+
+        #     self.ROOK: {
+        #         self.WHITE: [101,109],
+        #         self.BLACK: [11,19]
+        #     },
+
+        # }
+
         self.STARTING_COORDS = {
-            self.ADVISOR: {
-                self.WHITE: [104,106],
-                self.BLACK: [14,16]
+            self.WHITE: {
+                self.ADVISOR: [104,106],
+                self.CANNON: [82,88],
+                self.ELEPHANT: [103,107],
+                self.GENERAL: [105],
+                self.HORSE: [102, 108],
+                self.PAWN: [71,73,75,77,79],
+                self.ROOK: [101,109]
             },
-
-            self.CANNON: {
-                self.WHITE: [82,88],
-                self.BLACK: [32,38]
-            },
-
-            self.ELEPHANT: {
-                self.WHITE: [103,107],
-                self.BLACK: [13,17]
-            },
-
-            self.GENERAL: {
-                self.WHITE: [105],
-                self.BLACK: [15]
-            },
-
-            self.HORSE: {
-                self.WHITE: [102,108],
-                self.BLACK: [12,18]
-            },
-
-            self.PAWN: {
-                self.WHITE: [71,73,75,77,79],
-                self.BLACK: [41,43,45,47,49]
-            },
-
-            self.ROOK: {
-                self.WHITE: [101,109],
-                self.BLACK: [11,19]
-            },
-
+            self.BLACK: {
+                self.ADVISOR: [14, 16],
+                self.CANNON: [32,38],
+                self.ELEPHANT: [13,17],
+                self.GENERAL: [15],
+                self.HORSE: [12, 18],
+                self.PAWN: [41,43,45,47,49],
+                self.ROOK: [11,19]
+            }
         }
 
     def __str__(self):

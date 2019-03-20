@@ -51,11 +51,18 @@ class PieceBase(PieceConst):
     def __str__(self):
         return "{} - {}".format(self.name, self.description)
 
+    def __repr__(self): 
+        if len( self.moves)> 0: 
+            return "{} - {} - Position: {}".format(self.name, self.description, self.moves[-1])
+        else: 
+            return "{} - {}".format(self.name, self.description)
+
 
 class Advisor(PieceBase):
     def __init__(self):
         super().__init__()
         self.name = 'Advisor'
+        self.description = 'Advisor'
         
 class Cannon(PieceBase):
     def __init__(self):
