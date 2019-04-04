@@ -1,1 +1,5 @@
-[]
+[
+  "tests/test_full_match.py::TestFullGame::test_create_new_game",
+  "tests/test_full_match.py::TestFullGame::test_create_new_game_with_setup_provided",
+  "tests/test_game.py::TestGame::test_create_fresh_game"
+]
