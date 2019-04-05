@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/usr/bin/python3",
+    "python.pythonPath": "/home/longchau/.local/share/virtualenvs/cotuong.py-VUySsV3f/bin/python",
     "python.unitTest.pyTestArgs": [
         "tests"
     ],

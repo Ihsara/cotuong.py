@@ -9,4 +9,5 @@ class TestGame(TestCase):
         pass 
 
     def test_create_fresh_game(self):
-        pass 
+        pass
+        
