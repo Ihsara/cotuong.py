@@ -9,6 +9,9 @@ pytest = "*"
 
 [packages]
 requests = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-pep8 = "*"
 
 [requires]
 python_version = "3.7"
