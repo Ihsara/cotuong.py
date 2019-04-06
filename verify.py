@@ -45,5 +45,5 @@ class Advisor(Piece):
         super().__init__(self, name=name)
         self.position = pos
 
-    def _valid_move(self):
-        return True
+    def _valid_move(self, next_pos):
+        pass
