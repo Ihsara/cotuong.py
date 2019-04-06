@@ -5,5 +5,12 @@
   "tests/test_game.py::TestGame::test_create_game_with_dict",
   "tests/test_game.py::TestGame::test_create_game_with_fen",
   "tests/test_game.py::TestGame::test_game_history",
-  "tests/test_game.py::TestGame::test_update_current_turn"
+  "tests/test_game.py::TestGame::test_update_current_turn",
+  "tests/test_verifier.py::TestPieceVerifier::test_in_black_palace",
+  "tests/test_verifier.py::TestPieceVerifier::test_in_black_ter",
+  "tests/test_verifier.py::TestPieceVerifier::test_in_white_palace",
+  "tests/test_verifier.py::TestPieceVerifier::test_in_white_ter",
+  "tests/test_verifier.py::TestPieceVerifier::test_is_inboard",
+  "tests/test_verifier.py::TestAdvisorVerifier::test_black_advisors_move_black_paplace",
+  "tests/test_verifier.py::TestAdvisorVerifier::test_white_advisors_move_white_palace"
 ]

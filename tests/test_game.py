@@ -17,6 +17,13 @@ class TestGame(TestCase):
         self.assertEqual(new_game.history, [])
         self.assertEqual(new_game.next_move, 'w')
         self.assertEqual(new_game.turn, 1)
+
+        new_game.new_game() 
+        self.assertEqual(new_game.board_setup, start_coords_2)
+        self.assertEqual(new_game.board_matrix, board_matrix)
+        self.assertEqual(new_game.history, [])
+        self.assertEqual(new_game.next_move, 'w')
+        self.assertEqual(new_game.turn, 1)
     
     def test_create_game_with_fen(self):
         pass 

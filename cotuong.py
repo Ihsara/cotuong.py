@@ -25,6 +25,7 @@ class Game(object):
     def __new_game(self):
         self.board_setup= deepcopy(self.__start_coords)
         self.next_move = 'w'
+        self.turn = 1
         return 'New game has been set.'
 
     def new_game(self):
