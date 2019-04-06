@@ -1,5 +1,9 @@
 [
   "tests/test_full_match.py::TestFullGame::test_create_new_game",
   "tests/test_full_match.py::TestFullGame::test_create_new_game_with_setup_provided",
-  "tests/test_game.py::TestGame::test_create_fresh_game"
+  "tests/test_game.py::TestGame::test_create_fresh_game",
+  "tests/test_game.py::TestGame::test_create_game_with_dict",
+  "tests/test_game.py::TestGame::test_create_game_with_fen",
+  "tests/test_game.py::TestGame::test_game_history",
+  "tests/test_game.py::TestGame::test_update_current_turn"
 ]
