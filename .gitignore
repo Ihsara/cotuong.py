@@ -2,6 +2,10 @@ __pycache__/
 
 .pytest_cache/
 htmlcov/
+coverage.xml
+.coverage
+.coverage.*
+.cache
 
 .ipynb_checkpoints/ 
 
