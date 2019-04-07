@@ -8,6 +8,8 @@ horse = 'h'
 pawn = 'p'
 rock = 'r'
 
+INVALID_POS = -1110
+
 start_coords = {
     w: {
         advisor: [104,106],

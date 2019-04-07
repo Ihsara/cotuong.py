@@ -12,6 +12,7 @@ requests = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-pep8 = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"

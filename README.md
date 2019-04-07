@@ -11,6 +11,7 @@ cotuong.py dùng python 3.7.x và [pipenv](https://github.com/pypa/pipenv) để
 cd cotuong.py 
 pipenv install
 pipenv shell
+py.test tests/
 ```
 
 # Sử dụng
@@ -40,6 +41,8 @@ from verify import Advisor #Quân cờ nào cần kiểm tra
 - [ ] Kiểm nước cờ hợp lệ
 - [ ] Tạo ván cờ từ FEN 
 - [ ] Tạo ván cờ từ điển
+- [ ] Phỏng đoán thế cờ
+- [ ] Đánh giá thế cờ hiện tại
 - [ ] Cập nhật jupyter-notebook cho cách sử dụng
 - [ ] Đọc nguyên ván cờ từ file json
 - [ ] Đánh giá hiệu năng khi xử lý số lượng lớn
