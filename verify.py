@@ -13,7 +13,6 @@ class Piece(object):
         if  109 >= self.position >= 11 and self.position%10 != 0: 
             return True 
         else: 
-            print(self.position)
             return False
     
     def is_in_black_territory(self):
@@ -40,8 +39,12 @@ class Piece(object):
         else: 
             return False
     
-    def valid_move(self):
-        return 
+    def valid_move(self, next_pos=INVALID_POS):
+        self.position = next_pos
+        return self.is_inboard()
+
+    def set_move(self, next_pos):
+        return next_pos if self.valid_move(next_pos) else self.position
 
 class Advisor(Piece):
     def __init__(self, name, pos_id=0):
@@ -56,10 +59,64 @@ class Advisor(Piece):
         self.id = name+str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if next_pos in self.pos_limit and self.position + 9 == next_pos or self.position - 9 == next_pos or self.position - 11 == next_pos or self.position + 11 == next_pos:
+        if next_pos in self.pos_limit and (self.position + 9 == next_pos or self.position - 9 == next_pos or self.position - 11 == next_pos or self.position + 11 == next_pos):
             return True 
         else: 
             return False 
 
-    def set_move(self, next_pos):
-        return next_pos if self.valid_move(next_pos) else self.position
+class Cannon(Piece): 
+    def __init__(self, name, pos_id=0):
+        self.position = self.position[pos_id]
+        self.id = name +str(pos_id)
+
+    def valid_move(self, next_pos=INVALID_POS):
+        pass 
+
+class Elephant(Piece): 
+    def __init__(self, name, pos_id=0):
+        self.position = self.position[pos_id]
+        self.id = name +str(pos_id)
+
+    def valid_move(self, next_pos=INVALID_POS):
+        pass 
+
+class General(Piece): 
+    def __init__(self, name, pos_id=0):
+        super().__init__(name)
+        if name=='g': 
+            self.pos_limit = BLACK_PALACE_BOUNDARY
+        elif name == 'G': 
+            self.pos_limit = WHITE_PALACE_BOUNDARY
+        else: 
+            raise ValueError('General only takes "g" or "G" for name.')
+        self.position = self.position[pos_id]
+        self.id = name +str(pos_id)
+
+    def valid_move(self, next_pos=INVALID_POS):
+        if next_pos in self.pos_limit and (self.position + 1 == next_pos or self.position - 1 == next_pos or self.position + 10 == next_pos or self.position - 10 == next_pos):
+            return True 
+        else: return False 
+
+class Horse(Piece): 
+    def __init__(self, name, pos_id=0):
+        self.position = self.position[pos_id]
+        self.id = name +str(pos_id)
+
+    def valid_move(self, next_pos=INVALID_POS):
+        pass 
+
+class Pawn(Piece): 
+    def __init__(self, name, pos_id=0):
+        self.position = self.position[pos_id]
+        self.id = name +str(pos_id)
+
+    def valid_move(self, next_pos=INVALID_POS):
+        pass 
+
+class Rock(Piece): 
+    def __init__(self, name, pos_id=0):
+        self.position = self.position[pos_id]
+        self.id = name +str(pos_id)
+
+    def valid_move(self, next_pos=INVALID_POS):
+        pass 

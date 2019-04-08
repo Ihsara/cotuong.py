@@ -1,7 +1,7 @@
 from unittest import TestCase 
 
 from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
-from verify import Piece, Advisor 
+from verify import Piece, Advisor, Cannon, Elephant, General, Horse, Pawn, Rock
 
 class TestPieceVerifier(TestCase):
     def setUp(self):
@@ -112,3 +112,26 @@ class TestAdvisorVerifier(TestCase):
 
         self.assertTrue(self.advisor_b1.valid_move(25))
         self.assertTrue(self.advisor_b2.valid_move(25))
+
+class TestCannonVerifier(TestCase):
+    def setUp(self): 
+        self.cannon_w1 = Cannon('C',0)
+        self.cannon_w2 = Cannon('C',1)
+        self.cannon_b1 = Cannon('c',0)
+        self.cannon_b2 = Cannon('c',1)
+
+class TestElephantVerifier(TestCase):
+    def setUp(self): 
+        self.elephant_w1 = Elephant('E',0)
+        self.elephant_w2 = Elephant('E',1)
+        self.elephant_b1 = Elephant('e',0)
+        self.elephant_b2 = Elephant('e',1)
+
+class TestGeneralVerifier(TestCase):
+    def setUp(self): 
+        self.general_w1 = General('E',0)
+        self.general_w2 = General('E',1)
+        self.general_b1 = General('e',0)
+        self.general_b2 = General('e',1)
+
+    
