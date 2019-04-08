@@ -11,7 +11,7 @@ def is_dict(load):
     dict_format = [] #format like start_coords_2
     return isinstance(load, dict) and dict_format is not None
 
-class Game(object): 
+class GameState(object): 
     def __init__(self, load=''):       
         self.SYMBOLS = 'aceghprACEGHPR'
         self.nex_move = 'w'

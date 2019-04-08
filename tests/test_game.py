@@ -4,14 +4,14 @@ Test Game object in cotuong.py
 
 from unittest import TestCase 
 from cotuong_const import board_matrix, start_coords_2 
-from cotuong import Game
+from cotuong import GameState
 
 class TestGame(TestCase):
     def setUp(self):
-        self.new_game= Game()
+        self.new_game= GameState()
 
     def test_create_fresh_game(self):
-        new_game = Game()
+        new_game = GameState()
         self.assertEqual(new_game.board_setup, start_coords_2)
         self.assertEqual(new_game.board_matrix, board_matrix)
         self.assertEqual(new_game.history, [])

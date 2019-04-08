@@ -3,6 +3,10 @@ import numpy as np
 from cotuong_const import start_coords_2, INVALID_POS
 from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
 
+'''
+TBD: blocking and eating function
+'''
+
 class Piece(object):
     def __init__(self, name):
         self.name = name 
@@ -38,7 +42,7 @@ class Piece(object):
             return True 
         else: 
             return False
-    
+
     def valid_move(self, next_pos=INVALID_POS):
         self.position = next_pos
         return self.is_inboard()
@@ -59,13 +63,14 @@ class Advisor(Piece):
         self.id = name+str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if next_pos in self.pos_limit and (self.position + 9 == next_pos or self.position - 9 == next_pos or self.position - 11 == next_pos or self.position + 11 == next_pos):
+        if next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 9 == next_pos or self.position - 9 == next_pos or self.position - 11 == next_pos or self.position + 11 == next_pos):
             return True 
         else: 
             return False 
 
 class Cannon(Piece): 
     def __init__(self, name, pos_id=0):
+        super().__init__(name)
         self.position = self.position[pos_id]
         self.id = name +str(pos_id)
 
@@ -74,6 +79,7 @@ class Cannon(Piece):
 
 class Elephant(Piece): 
     def __init__(self, name, pos_id=0):
+        super().__init__(name)
         self.position = self.position[pos_id]
         self.id = name +str(pos_id)
 
@@ -93,12 +99,13 @@ class General(Piece):
         self.id = name +str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if next_pos in self.pos_limit and (self.position + 1 == next_pos or self.position - 1 == next_pos or self.position + 10 == next_pos or self.position - 10 == next_pos):
+        if next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 1 == next_pos or self.position - 1 == next_pos or self.position + 10 == next_pos or self.position - 10 == next_pos):
             return True 
         else: return False 
 
 class Horse(Piece): 
     def __init__(self, name, pos_id=0):
+        super().__init__(name)
         self.position = self.position[pos_id]
         self.id = name +str(pos_id)
 
@@ -107,6 +114,7 @@ class Horse(Piece):
 
 class Pawn(Piece): 
     def __init__(self, name, pos_id=0):
+        super().__init__(name)
         self.position = self.position[pos_id]
         self.id = name +str(pos_id)
 
@@ -115,6 +123,7 @@ class Pawn(Piece):
 
 class Rock(Piece): 
     def __init__(self, name, pos_id=0):
+        super().__init__(name)
         self.position = self.position[pos_id]
         self.id = name +str(pos_id)
 

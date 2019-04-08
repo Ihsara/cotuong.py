@@ -120,6 +120,12 @@ class TestCannonVerifier(TestCase):
         self.cannon_b1 = Cannon('c',0)
         self.cannon_b2 = Cannon('c',1)
 
+    def test_cannon_move_vertically(self):
+        pass 
+
+    def test_cannon_move_horinzontally(self):
+        pass 
+
 class TestElephantVerifier(TestCase):
     def setUp(self): 
         self.elephant_w1 = Elephant('E',0)
@@ -127,11 +133,204 @@ class TestElephantVerifier(TestCase):
         self.elephant_b1 = Elephant('e',0)
         self.elephant_b2 = Elephant('e',1)
 
+    def test_elephant_white_territory(self):
+        pass 
+
+    def test_elephant_black_territory(self):
+        pass 
+
+    def test_elephant_in_enemy_territory(self):
+        pass 
+
 class TestGeneralVerifier(TestCase):
     def setUp(self): 
-        self.general_w1 = General('E',0)
-        self.general_w2 = General('E',1)
-        self.general_b1 = General('e',0)
-        self.general_b2 = General('e',1)
+        self.general_w1 = General('G',0)
+        self.general_b1 = General('g',0)
+        self.white_palace = WHITE_PALACE_BOUNDARY.copy() 
+        self.black_palace = BLACK_PALACE_BOUNDARY.copy() 
 
-    
+    def test_general_white_palace(self):
+        self.assertTrue(self.general_w1.valid_move(95))
+        self.assertTrue(self.general_w1.valid_move(104))
+        self.assertTrue(self.general_w1.valid_move(106))
+
+        temp_white = [i for i in self.white_palace if i not in [95, 104, 106]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc))   
+
+        self.general_w1.position = 104
+        self.assertTrue(self.general_w1.valid_move(94))
+        self.assertTrue(self.general_w1.valid_move(105))
+
+        temp_white = [i for i in self.white_palace if i not in [94, 105]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc)) 
+
+        self.general_w1.position = 106
+        self.assertTrue(self.general_w1.valid_move(96))
+        self.assertTrue(self.general_w1.valid_move(105))
+
+        temp_white = [i for i in self.white_palace if i not in [96, 105]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc)) 
+
+        self.general_w1.position = 84
+        self.assertTrue(self.general_w1.valid_move(94))
+        self.assertTrue(self.general_w1.valid_move(85))
+
+        temp_white = [i for i in self.white_palace if i not in [94, 85]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc)) 
+
+        self.general_w1.position = 86
+        self.assertTrue(self.general_w1.valid_move(96))
+        self.assertTrue(self.general_w1.valid_move(85))
+
+        temp_white = [i for i in self.white_palace if i not in [96, 85]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc)) 
+
+        self.general_w1.position = 85
+        self.assertTrue(self.general_w1.valid_move(95))
+        self.assertTrue(self.general_w1.valid_move(84))
+        self.assertTrue(self.general_w1.valid_move(86))
+
+        temp_white = [i for i in self.white_palace if i not in [95, 84, 86]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc))   
+
+        self.general_w1.position=94
+        self.assertTrue(self.general_w1.valid_move(95))
+        self.assertTrue(self.general_w1.valid_move(84))
+        self.assertTrue(self.general_w1.valid_move(104))
+
+        temp_white = [i for i in self.white_palace if i not in [95, 84, 104]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc)) 
+
+        self.general_w1.position=96
+        self.assertTrue(self.general_w1.valid_move(95))
+        self.assertTrue(self.general_w1.valid_move(86))
+        self.assertTrue(self.general_w1.valid_move(106))
+
+        temp_white = [i for i in self.white_palace if i not in [95, 86, 106]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc))   
+
+        self.general_w1.position=95
+        self.assertTrue(self.general_w1.valid_move(85))
+        self.assertTrue(self.general_w1.valid_move(105))
+        self.assertTrue(self.general_w1.valid_move(94))
+        self.assertTrue(self.general_w1.valid_move(96))
+
+        temp_white = [i for i in self.white_palace if i not in [85, 94, 96, 105]]
+        for loc in temp_white: 
+            self.assertFalse(self.general_w1.valid_move(loc))  
+
+    def test_general_black_palace(self):
+        self.assertTrue(self.general_b1.valid_move(25))
+        self.assertTrue(self.general_b1.valid_move(14))
+        self.assertTrue(self.general_b1.valid_move(16))
+
+        temp_black = [i for i in self.white_palace if i not in [25, 14, 16]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc))   
+
+        self.general_b1.position = 14
+        self.assertTrue(self.general_b1.valid_move(24))
+        self.assertTrue(self.general_b1.valid_move(15))
+
+        temp_black = [i for i in self.white_palace if i not in [24, 15]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc)) 
+
+        self.general_b1.position = 16
+        self.assertTrue(self.general_b1.valid_move(26))
+        self.assertTrue(self.general_b1.valid_move(15))
+
+        temp_black = [i for i in self.white_palace if i not in [26, 15]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc)) 
+
+        self.general_b1.position = 34
+        self.assertTrue(self.general_b1.valid_move(24))
+        self.assertTrue(self.general_b1.valid_move(35))
+
+        temp_black = [i for i in self.white_palace if i not in [24, 35]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc)) 
+
+        self.general_b1.position = 36
+        self.assertTrue(self.general_b1.valid_move(26))
+        self.assertTrue(self.general_b1.valid_move(35))
+
+        temp_black = [i for i in self.white_palace if i not in [26, 35]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc)) 
+
+        self.general_b1.position = 35
+        self.assertTrue(self.general_b1.valid_move(25))
+        self.assertTrue(self.general_b1.valid_move(34))
+        self.assertTrue(self.general_b1.valid_move(36))
+
+        temp_black = [i for i in self.white_palace if i not in [25, 34, 36]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc))   
+
+        self.general_b1.position=24
+        self.assertTrue(self.general_b1.valid_move(25))
+        self.assertTrue(self.general_b1.valid_move(34))
+        self.assertTrue(self.general_b1.valid_move(14))
+
+        temp_black = [i for i in self.white_palace if i not in [25, 34, 14]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc)) 
+
+        self.general_b1.position=26
+        self.assertTrue(self.general_b1.valid_move(25))
+        self.assertTrue(self.general_b1.valid_move(36))
+        self.assertTrue(self.general_b1.valid_move(16))
+
+        temp_black = [i for i in self.white_palace if i not in [25, 36, 16]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc))   
+
+        self.general_b1.position=25
+        self.assertTrue(self.general_b1.valid_move(35))
+        self.assertTrue(self.general_b1.valid_move(15))
+        self.assertTrue(self.general_b1.valid_move(24))
+        self.assertTrue(self.general_b1.valid_move(26))
+
+        temp_black = [i for i in self.white_palace if i not in [35, 24, 26, 15]]
+        for loc in temp_black: 
+            self.assertFalse(self.general_b1.valid_move(loc))  
+
+class TestHorseVerifier(TestCase):
+    def setUp(self):
+        self.horse_w1 = Horse('H', 0)
+        self.horse_w2 = Horse('H', 1)
+        self.horse_b1 = Horse('h', 0)
+        self.horse_b2 = Horse('h', 1)
+
+class TestPawnVerifier(TestCase):
+    def setUp(self):
+        self.pawn_w1 = Pawn('P', 0)
+        self.pawn_w2 = Pawn('P', 1)
+        self.pawn_w3 = Pawn('P', 2)
+        self.pawn_w4 = Pawn('P', 3)
+        self.pawn_w5 = Pawn('P', 4)
+
+        self.pawn_b1 = Pawn('p', 0)
+        self.pawn_b2 = Pawn('p', 1)
+        self.pawn_b3 = Pawn('p', 2)
+        self.pawn_b4 = Pawn('p', 3)
+        self.pawn_b5 = Pawn('p', 4)
+
+
+
+class TestRockVerifier(TestCase):
+    def setUp(self):
+        self.rock_w1 = Rock('R', 0)
+        self.rock_w2 = Rock('R', 1)
+        self.rock_b1 = Rock('r', 0)
+        self.rock_b2 = Rock('r', 1)
