@@ -13,8 +13,10 @@ class Piece(object):
         self.position = start_coords_2[name]
         self.INVALID_POS = INVALID_POS
 
-    def is_inboard(self):
-        if  109 >= self.position >= 11 and self.position%10 != 0: 
+    def is_inboard(self, next_pos=INVALID_POS):
+        if next_pos != INVALID_POS and 109 >= next_pos >= 11 and next_pos%10 != 0: 
+            return True 
+        elif  109 >= self.position >= 11 and self.position%10 != 0: 
             return True 
         else: 
             return False
@@ -75,7 +77,10 @@ class Cannon(Piece):
         self.id = name +str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        pass 
+        if self.is_inboard(next_pos) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and next_pos//10 - self.position//10 == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position)%10 == 0)):
+            return True 
+        else: 
+            return False
 
 class Elephant(Piece): 
     def __init__(self, name, pos_id=0):
@@ -137,4 +142,7 @@ class Rock(Piece):
         self.id = name +str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        pass 
+        if self.is_inboard(next_pos) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and next_pos//10 - self.position//10 == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position)%10 == 0)):
+            return True 
+        else: 
+            return False    
