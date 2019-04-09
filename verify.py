@@ -4,7 +4,7 @@ from cotuong_const import start_coords_2, INVALID_POS
 from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
 
 '''
-TBD: blocking and eating function
+TBD: blocking and eating function => Move to GameState 
 '''
 
 class Piece(object):
@@ -82,9 +82,18 @@ class Elephant(Piece):
         super().__init__(name)
         self.position = self.position[pos_id]
         self.id = name +str(pos_id)
+        if name == 'e':
+            self.pos_limit = [13, 17, 31, 35, 39, 53, 57]
+        elif name == 'E':
+            self.pos_limit = [63, 67, 81, 85, 89, 103, 107]
+        else: 
+            raise ValueError("Elephant only takes 'e' or 'E' for name")
 
     def valid_move(self, next_pos=INVALID_POS):
-        pass 
+        if next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 18 == next_pos or self.position - 18 == next_pos or self.position + 22 == next_pos or self.position - 22 == next_pos):
+            return True 
+        else:
+            return False
 
 class General(Piece): 
     def __init__(self, name, pos_id=0):

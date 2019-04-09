@@ -134,10 +134,62 @@ class TestElephantVerifier(TestCase):
         self.elephant_b2 = Elephant('e',1)
 
     def test_elephant_white_territory(self):
-        pass 
+        self.assertEqual(self.elephant_w1.position, 103)
+        self.assertEqual(self.elephant_w2.position, 107)
+        self.assertTrue(self.elephant_w1.valid_move(81))
+        self.assertTrue(self.elephant_w1.valid_move(85))
+        self.assertTrue(self.elephant_w2.valid_move(89))
+        self.assertTrue(self.elephant_w2.valid_move(85))
+
+        self.elephant_w1.position = 81 
+        self.elephant_w2.position = 89
+
+        self.assertTrue(self.elephant_w1.valid_move(63))
+        self.assertTrue(self.elephant_w1.valid_move(103))
+        self.assertTrue(self.elephant_w2.valid_move(107))
+        self.assertTrue(self.elephant_w2.valid_move(67))    
+
+        self.elephant_w1.position = 63
+        self.elephant_w2.position = 67
+
+        self.assertTrue(self.elephant_w1.valid_move(81))
+        self.assertTrue(self.elephant_w1.valid_move(85))
+        self.assertTrue(self.elephant_w2.valid_move(85))
+        self.assertTrue(self.elephant_w2.valid_move(89))    
+
+        self.elephant_w1.position = 85
+        self.assertTrue(self.elephant_w1.valid_move(63))
+        self.assertTrue(self.elephant_w1.valid_move(67))
+        self.assertTrue(self.elephant_w1.valid_move(103))
+        self.assertTrue(self.elephant_w1.valid_move(107))
 
     def test_elephant_black_territory(self):
-        pass 
+        self.assertTrue(self.elephant_b1.valid_move(31))
+        self.assertTrue(self.elephant_b1.valid_move(35))
+        self.assertTrue(self.elephant_b2.valid_move(39))
+        self.assertTrue(self.elephant_b2.valid_move(35))
+
+        self.elephant_b1.position = 31 
+        self.elephant_b2.position = 39
+
+        self.assertTrue(self.elephant_b1.valid_move(53))
+        self.assertTrue(self.elephant_b1.valid_move(13))
+        self.assertTrue(self.elephant_b2.valid_move(17))
+        self.assertTrue(self.elephant_b2.valid_move(57))    
+
+        self.elephant_b1.position = 53
+        self.elephant_b2.position = 57
+
+        self.assertTrue(self.elephant_b1.valid_move(31))
+        self.assertTrue(self.elephant_b1.valid_move(35))
+        self.assertTrue(self.elephant_b2.valid_move(35))
+        self.assertTrue(self.elephant_b2.valid_move(39))    
+
+        self.elephant_b1.position = 35
+        self.assertTrue(self.elephant_b1.valid_move(53))
+        self.assertTrue(self.elephant_b1.valid_move(57))
+        self.assertTrue(self.elephant_b1.valid_move(13))
+        self.assertTrue(self.elephant_b1.valid_move(17))
 
     def test_elephant_in_enemy_territory(self):
         pass 
