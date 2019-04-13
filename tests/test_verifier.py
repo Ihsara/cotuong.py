@@ -1,6 +1,6 @@
 from unittest import TestCase 
 
-from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
+from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY, board_matrix
 from verify import Piece, Advisor, Cannon, Elephant, General, Horse, Pawn, Rock
 
 class TestPieceVerifier(TestCase):
@@ -121,11 +121,32 @@ class TestCannonVerifier(TestCase):
         self.cannon_b2 = Cannon('c',1)
 
     def test_cannon_move_vertically(self):
-        pass 
+        self.assertEqual(self.cannon_w1.position, 82)
+        self.assertEqual(self.cannon_w2.position, 88)
+        self.assertEqual(self.cannon_b1.position, 32)
+        self.assertEqual(self.cannon_b2.position, 38)
 
+        for row in board_matrix: 
+            for col in row: 
+                if 109 >= col >= 11 and col%10 != 0: 
+                    for delta in range(1, 10): 
+                        self.cannon_w1.position = col
+                        self.assertTrue(self.cannon_w1.valid_move(col+ delta*10))
+                        
     def test_cannon_move_horinzontally(self):
-        pass 
+        self.assertEqual(self.cannon_w1.position, 82)
+        self.assertEqual(self.cannon_w2.position, 88)
+        self.assertEqual(self.cannon_b1.position, 32)
+        self.assertEqual(self.cannon_b2.position, 38)
 
+        for row in board_matrix: 
+            for col in row: 
+                if 109 >= col >= 11 and col%10 != 0: 
+                    self.cannon_b1.position = col
+                    for horinz_delta in row:                        
+                        if horinz_delta != col and 109>= horinz_delta>= 11 and horinz_delta%10 != 0: 
+                            self.assertTrue(self.cannon_b1.valid_move(horinz_delta))
+     
 class TestElephantVerifier(TestCase):
     def setUp(self): 
         self.elephant_w1 = Elephant('E',0)
@@ -386,3 +407,31 @@ class TestRockVerifier(TestCase):
         self.rock_w2 = Rock('R', 1)
         self.rock_b1 = Rock('r', 0)
         self.rock_b2 = Rock('r', 1)
+
+    def test_rock_move_vertically(self):
+        self.assertEqual(self.rock_w1.position, 101)
+        self.assertEqual(self.rock_w2.position, 109)
+        self.assertEqual(self.rock_b1.position, 11)
+        self.assertEqual(self.rock_b2.position, 19)
+
+        for row in board_matrix: 
+            for col in row: 
+                if 109 >= col >= 11 and col%10 != 0: 
+                    for delta in range(1, 10): 
+                        self.rock_w1.position = col
+                        self.assertTrue(self.rock_w1.valid_move(col+ delta*10))                
+
+    def test_rock_move_horinzontally(self):
+        self.assertEqual(self.rock_w1.position, 101)
+        self.assertEqual(self.rock_w2.position, 109)
+        self.assertEqual(self.rock_b1.position, 11)
+        self.assertEqual(self.rock_b2.position, 19)
+
+        for row in board_matrix: 
+            for col in row: 
+                if 109 >= col >= 11 and col%10 != 0: 
+                    self.rock_b1.position = col
+                    for horinz_delta in row:                        
+                        if horinz_delta != col and 109>= horinz_delta>= 11 and horinz_delta%10 != 0: 
+                            self.assertTrue(self.rock_b1.valid_move(horinz_delta))
+ 

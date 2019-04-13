@@ -19,5 +19,7 @@
   "tests/test_verifier.py::TestElephantVerifier::test_elephant_in_enemy_territory",
   "tests/test_verifier.py::TestElephantVerifier::test_elephant_white_territory",
   "tests/test_verifier.py::TestGeneralVerifier::test_general_black_palace",
-  "tests/test_verifier.py::TestGeneralVerifier::test_general_white_palace"
+  "tests/test_verifier.py::TestGeneralVerifier::test_general_white_palace",
+  "tests/test_verifier.py::TestRockVerifier::test_rock_move_horinzontally",
+  "tests/test_verifier.py::TestRockVerifier::test_rock_move_vertically"
 ]
