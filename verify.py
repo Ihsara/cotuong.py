@@ -77,7 +77,7 @@ class Cannon(Piece):
         self.id = name +str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if self.is_inboard(next_pos) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and next_pos//10 - self.position//10 == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position)%10 == 0)):
+        if self.is_inboard(self.position) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and next_pos//10 - self.position//10 == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position)%10 == 0)):
             return True 
         else: 
             return False
