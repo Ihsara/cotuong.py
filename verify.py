@@ -1,12 +1,12 @@
 import numpy as np
 
 from cotuong_const import start_coords_2, INVALID_POS
-from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
+from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY, BOARD_LOC_NUM
+from cotuong_const import MOVE_VERTICALLY_ONE_UNIT_FWD
 
 '''
 TBD: blocking and eating function => Move to GameState 
 '''
-
 
 class Piece(object):
     def __init__(self, name):
@@ -67,7 +67,7 @@ class Advisor(Piece):
         self.id = name+str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 9 == next_pos or self.position - 9 == next_pos or self.position - 11 == next_pos or self.position + 11 == next_pos):
+        if self.position != next_pos and next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 9 == next_pos or self.position - 9 == next_pos or self.position - 11 == next_pos or self.position + 11 == next_pos):
             return True
         else:
             return False
@@ -80,7 +80,7 @@ class Cannon(Piece):
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if self.is_inboard(self.position) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and (next_pos//10 - self.position//10) == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position) % 10 == 0)):
+        if self.position != next_pos and self.is_inboard(self.position) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and (next_pos//10 - self.position//10) == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position) % 10 == 0)):
             return True
         else:
             return False
@@ -99,7 +99,7 @@ class Elephant(Piece):
             raise ValueError("Elephant only takes 'e' or 'E' for name")
 
     def valid_move(self, next_pos=INVALID_POS):
-        if next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 18 == next_pos or self.position - 18 == next_pos or self.position + 22 == next_pos or self.position - 22 == next_pos):
+        if self.position != next_pos and next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 18 == next_pos or self.position - 18 == next_pos or self.position + 22 == next_pos or self.position - 22 == next_pos):
             return True
         else:
             return False
@@ -118,7 +118,7 @@ class General(Piece):
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 1 == next_pos or self.position - 1 == next_pos or self.position + 10 == next_pos or self.position - 10 == next_pos):
+        if self.position != next_pos and next_pos in self.pos_limit and self.position in self.pos_limit and (self.position + 1 == next_pos or self.position - 1 == next_pos or self.position + 10 == next_pos or self.position - 10 == next_pos):
             return True
         else:
             return False
@@ -131,17 +131,31 @@ class Horse(Piece):
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        pass
-
+        if self.position != next_pos and self.is_inboard(self.position) and self.is_inboard(next_pos) and ((self.position + 8 == next_pos or self.position - 8 == next_pos) or (self.position + 12 == next_pos or self.position - 12 == next_pos) or (self.position + 19 == next_pos or self.position - 19 == next_pos) or (self.position + 21 == next_pos or self.position - 21 == next_pos)):
+            return True
+        else:
+            return False
 
 class Pawn(Piece):
     def __init__(self, name, pos_id=0):
         super().__init__(name)
+        if name.islower(): 
+            self.fwd_only_pos_limit = [ i + 10 for i in self.position]+ self.position
+            self.pos_limit = [i for i in BOARD_LOC_NUM if i >= 61] + self.fwd_only_pos_limit            
+        else:             
+            self.fwd_only_pos_limit = [ i - 10 for i in self.position]+ self.position
+            self.pos_limit = [i for i in BOARD_LOC_NUM if i <= 59] + self.fwd_only_pos_limit
         self.position = self.position[pos_id]
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        pass
+        if self.position != next_pos and self.position in self.pos_limit and next_pos in self.pos_limit: 
+            if self.name.islower() and ((self.is_in_white_territory() and (next_pos - 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos - 10 == self.position)):
+                return True 
+            elif (self.is_in_black_territory() and (next_pos + 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos + 10 == self.position):
+                return True 
+            else: 
+                return False
 
 
 class Rock(Piece):
@@ -151,7 +165,7 @@ class Rock(Piece):
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if self.is_inboard(self.position) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and (next_pos//10 - self.position//10) == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position) % 10 == 0)):
+        if self.position != next_pos and self.is_inboard(self.position) and self.is_inboard(next_pos) and ((abs(next_pos - self.position) <= 8 and (next_pos//10 - self.position//10) == 0) or (abs(next_pos - self.position) >= 10 and abs(next_pos - self.position) % 10 == 0)):
             return True
         else:
             return False
