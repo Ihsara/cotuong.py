@@ -18,6 +18,11 @@ class TestPieceVerifier(TestCase):
                 self.piece.position = pos + col_incre
                 self.assertTrue(self.piece.is_inboard())
 
+        self.assertFalse(self.piece.is_inboard(next_pos=112))
+        self.assertFalse(self.piece.is_inboard(next_pos=114))
+        self.assertFalse(self.piece.is_inboard(next_pos=1110))
+        self.assertTrue(self.piece.is_inboard())
+
     def test_in_black_ter(self):
         for pos in self.pos_inboard_upperbound:
             for col_incre in range(0, 50, 10):
@@ -133,8 +138,12 @@ class TestCannonVerifier(TestCase):
                 if 109 >= col >= 11 and col % 10 != 0:
                     for delta in range(1, 10):
                         self.cannon_w1.position = col
-                        self.assertTrue(
-                            self.cannon_w1.valid_move(col + delta*10))
+                        if self.cannon_w1.is_inboard(col + delta*10):
+                            self.assertTrue(
+                                self.cannon_w1.valid_move(col + delta*10))
+                        else:
+                            self.assertFalse(
+                                self.cannon_w1.valid_move(col + delta*10))
 
     def test_cannon_move_horinzontally(self):
         self.assertEqual(self.cannon_w1.position, 82)
@@ -394,6 +403,358 @@ class TestHorseVerifier(TestCase):
         self.horse_b1 = Horse('h', 0)
         self.horse_b2 = Horse('h', 1)
 
+    def test_horse_two_side_blocked_northwest(self):
+        self.horse_w1.position = 22
+        self.assertTrue(self.horse_w1.valid_move(14))
+        self.assertTrue(self.horse_w1.valid_move(34))
+        self.assertTrue(self.horse_w1.valid_move(43))
+        self.assertTrue(self.horse_w1.valid_move(41))
+        self.assertFalse(self.horse_w1.valid_move(10))
+        self.assertFalse(self.horse_w1.valid_move(1))
+        self.assertFalse(self.horse_w1.valid_move(3))
+        self.assertFalse(self.horse_w1.valid_move(30))
+
+        self.horse_w1.position = 11
+        self.assertTrue(self.horse_w1.valid_move(23))
+        self.assertTrue(self.horse_w1.valid_move(32))
+        self.assertFalse(self.horse_w1.valid_move(3))
+        self.assertFalse(self.horse_w1.valid_move(30))
+
+        self.horse_w1.position = 21
+        self.assertTrue(self.horse_w1.valid_move(42))
+        self.assertTrue(self.horse_w1.valid_move(33))
+        self.assertTrue(self.horse_w1.valid_move(13))
+        self.assertFalse(self.horse_w1.valid_move(40))
+        self.assertFalse(self.horse_w1.valid_move(2))
+        self.assertFalse(self.horse_w1.valid_move(0))
+
+        self.horse_w1.position = 12
+        self.assertTrue(self.horse_w1.valid_move(24))
+        self.assertTrue(self.horse_w1.valid_move(33))
+        self.assertTrue(self.horse_w1.valid_move(31))
+        self.assertFalse(self.horse_w1.valid_move(4))
+        self.assertFalse(self.horse_w1.valid_move(20))
+        self.assertFalse(self.horse_w1.valid_move(0))
+
+    def test_horse_two_side_blocked_northeast(self):
+        self.horse_w1.position = 28
+        self.assertTrue(self.horse_w1.valid_move(49))
+        self.assertTrue(self.horse_w1.valid_move(47))
+        self.assertTrue(self.horse_w1.valid_move(36))
+        self.assertTrue(self.horse_w1.valid_move(16))
+        self.assertFalse(self.horse_w1.valid_move(7))
+        self.assertFalse(self.horse_w1.valid_move(9))
+        self.assertFalse(self.horse_w1.valid_move(110))
+        self.assertFalse(self.horse_w1.valid_move(310))
+
+        self.horse_w1.position = 19
+        self.assertTrue(self.horse_w1.valid_move(27))
+        self.assertTrue(self.horse_w1.valid_move(38))
+        self.assertFalse(self.horse_w1.valid_move(7))
+        self.assertFalse(self.horse_w1.valid_move(310))
+
+        self.horse_w1.position = 18
+        self.assertTrue(self.horse_w1.valid_move(26))
+        self.assertTrue(self.horse_w1.valid_move(37))
+        self.assertTrue(self.horse_w1.valid_move(39))
+        self.assertFalse(self.horse_w1.valid_move(6))
+        self.assertFalse(self.horse_w1.valid_move(10))
+        self.assertFalse(self.horse_w1.valid_move(210))
+
+        self.horse_w1.position = 29
+        self.assertTrue(self.horse_w1.valid_move(48))
+        self.assertTrue(self.horse_w1.valid_move(37))
+        self.assertTrue(self.horse_w1.valid_move(17))
+        self.assertFalse(self.horse_w1.valid_move(8))
+        self.assertFalse(self.horse_w1.valid_move(10))
+        self.assertFalse(self.horse_w1.valid_move(410))
+
+    def test_horse_two_side_blocked_southeast(self):
+        self.horse_w1.position = 98
+        self.assertTrue(self.horse_w1.valid_move(106))
+        self.assertTrue(self.horse_w1.valid_move(86))
+        self.assertTrue(self.horse_w1.valid_move(77))
+        self.assertTrue(self.horse_w1.valid_move(79))
+        self.assertFalse(self.horse_w1.valid_move(810))
+        self.assertFalse(self.horse_w1.valid_move(119))
+        self.assertFalse(self.horse_w1.valid_move(117))
+        self.assertFalse(self.horse_w1.valid_move(1010))
+
+        self.horse_w1.position = 109
+        self.assertTrue(self.horse_w1.valid_move(88))
+        self.assertTrue(self.horse_w1.valid_move(97))
+        self.assertFalse(self.horse_w1.valid_move(810))
+        self.assertFalse(self.horse_w1.valid_move(117))
+
+        self.horse_w1.position = 108
+        self.assertTrue(self.horse_w1.valid_move(96))
+        self.assertTrue(self.horse_w1.valid_move(87))
+        self.assertTrue(self.horse_w1.valid_move(89))
+        self.assertFalse(self.horse_w1.valid_move(116))
+        self.assertFalse(self.horse_w1.valid_move(1110))
+        self.assertFalse(self.horse_w1.valid_move(910))
+
+        self.horse_w1.position = 99
+        self.assertTrue(self.horse_w1.valid_move(107))
+        self.assertTrue(self.horse_w1.valid_move(87))
+        self.assertTrue(self.horse_w1.valid_move(78))
+        self.assertFalse(self.horse_w1.valid_move(710))
+        self.assertFalse(self.horse_w1.valid_move(1110))
+        self.assertFalse(self.horse_w1.valid_move(118))
+
+    def test_horse_two_side_blocked_southwest(self):
+        self.horse_w1.position = 92
+        self.assertTrue(self.horse_w1.valid_move(71))
+        self.assertTrue(self.horse_w1.valid_move(73))
+        self.assertTrue(self.horse_w1.valid_move(84))
+        self.assertTrue(self.horse_w1.valid_move(104))
+        self.assertFalse(self.horse_w1.valid_move(80))
+        self.assertFalse(self.horse_w1.valid_move(100))
+        self.assertFalse(self.horse_w1.valid_move(111))
+        self.assertFalse(self.horse_w1.valid_move(113))
+
+        self.horse_w1.position = 101
+        self.assertTrue(self.horse_w1.valid_move(82))
+        self.assertTrue(self.horse_w1.valid_move(93))
+        self.assertFalse(self.horse_w1.valid_move(80))
+        self.assertFalse(self.horse_w1.valid_move(113))
+
+        self.horse_w1.position = 91
+        self.assertTrue(self.horse_w1.valid_move(72))
+        self.assertTrue(self.horse_w1.valid_move(83))
+        self.assertTrue(self.horse_w1.valid_move(103))
+        self.assertFalse(self.horse_w1.valid_move(70))
+        self.assertFalse(self.horse_w1.valid_move(110))
+        self.assertFalse(self.horse_w1.valid_move(119))
+
+        self.horse_w1.position = 102
+        self.assertTrue(self.horse_w1.valid_move(81))
+        self.assertTrue(self.horse_w1.valid_move(83))
+        self.assertTrue(self.horse_w1.valid_move(94))
+        self.assertFalse(self.horse_w1.valid_move(114))
+        self.assertFalse(self.horse_w1.valid_move(110))
+        self.assertFalse(self.horse_w1.valid_move(90))
+
+    def test_horse_one_side_block_southern(self):
+        self.horse_w2.position = 93
+        self.assertTrue(self.horse_w2.valid_move(101))
+        self.assertTrue(self.horse_w2.valid_move(81))
+        self.assertTrue(self.horse_w2.valid_move(72))
+        self.assertTrue(self.horse_w2.valid_move(74))
+        self.assertTrue(self.horse_w2.valid_move(85))
+        self.assertTrue(self.horse_w2.valid_move(105))
+        self.assertFalse(self.horse_w2.valid_move(112))
+        self.assertFalse(self.horse_w2.valid_move(114))
+
+        self.horse_w2.position = 97
+        self.assertTrue(self.horse_w2.valid_move(109))
+        self.assertTrue(self.horse_w2.valid_move(89))
+        self.assertTrue(self.horse_w2.valid_move(78))
+        self.assertTrue(self.horse_w2.valid_move(76))
+        self.assertTrue(self.horse_w2.valid_move(85))
+        self.assertTrue(self.horse_w2.valid_move(105))
+        self.assertFalse(self.horse_w2.valid_move(116))
+        self.assertFalse(self.horse_w2.valid_move(118))
+
+        self.horse_w2.position = 95
+        self.assertTrue(self.horse_w2.valid_move(103))
+        self.assertTrue(self.horse_w2.valid_move(83))
+        self.assertTrue(self.horse_w2.valid_move(74))
+        self.assertTrue(self.horse_w2.valid_move(76))
+        self.assertTrue(self.horse_w2.valid_move(87))
+        self.assertTrue(self.horse_w2.valid_move(107))
+        self.assertFalse(self.horse_w2.valid_move(114))
+        self.assertFalse(self.horse_w2.valid_move(116))
+
+    def test_horse_one_side_block_eastern(self):
+        self.horse_w2.position = 88
+        self.assertTrue(self.horse_w2.valid_move(69))
+        self.assertTrue(self.horse_w2.valid_move(67))
+        self.assertTrue(self.horse_w2.valid_move(76))
+        self.assertTrue(self.horse_w2.valid_move(96))
+        self.assertTrue(self.horse_w2.valid_move(107))
+        self.assertTrue(self.horse_w2.valid_move(109))
+        self.assertFalse(self.horse_w2.valid_move(910))
+        self.assertFalse(self.horse_w2.valid_move(710))
+
+        self.horse_w2.position = 38
+        self.assertTrue(self.horse_w2.valid_move(19))
+        self.assertTrue(self.horse_w2.valid_move(17))
+        self.assertTrue(self.horse_w2.valid_move(26))
+        self.assertTrue(self.horse_w2.valid_move(46))
+        self.assertTrue(self.horse_w2.valid_move(57))
+        self.assertTrue(self.horse_w2.valid_move(59))
+        self.assertFalse(self.horse_w2.valid_move(210))
+        self.assertFalse(self.horse_w2.valid_move(410))
+
+        self.horse_w2.position = 68
+        self.assertTrue(self.horse_w2.valid_move(49))
+        self.assertTrue(self.horse_w2.valid_move(47))
+        self.assertTrue(self.horse_w2.valid_move(56))
+        self.assertTrue(self.horse_w2.valid_move(76))
+        self.assertTrue(self.horse_w2.valid_move(87))
+        self.assertTrue(self.horse_w2.valid_move(89))
+        self.assertFalse(self.horse_w2.valid_move(114))
+        self.assertFalse(self.horse_w2.valid_move(116))
+
+    def test_horse_one_side_block_western(self):
+        self.horse_w2.position = 82
+        self.assertTrue(self.horse_w2.valid_move(101))
+        self.assertTrue(self.horse_w2.valid_move(94))
+        self.assertTrue(self.horse_w2.valid_move(63))
+        self.assertTrue(self.horse_w2.valid_move(74))
+        self.assertTrue(self.horse_w2.valid_move(61))
+        self.assertTrue(self.horse_w2.valid_move(103))
+        self.assertFalse(self.horse_w2.valid_move(70))
+        self.assertFalse(self.horse_w2.valid_move(90))
+
+        self.horse_w2.position = 32
+        self.assertTrue(self.horse_w2.valid_move(11))
+        self.assertTrue(self.horse_w2.valid_move(13))
+        self.assertTrue(self.horse_w2.valid_move(24))
+        self.assertTrue(self.horse_w2.valid_move(44))
+        self.assertTrue(self.horse_w2.valid_move(53))
+        self.assertTrue(self.horse_w2.valid_move(51))
+        self.assertFalse(self.horse_w2.valid_move(20))
+        self.assertFalse(self.horse_w2.valid_move(40))
+
+        self.horse_w2.position = 52
+        self.assertTrue(self.horse_w2.valid_move(31))
+        self.assertTrue(self.horse_w2.valid_move(33))
+        self.assertTrue(self.horse_w2.valid_move(44))
+        self.assertTrue(self.horse_w2.valid_move(64))
+        self.assertTrue(self.horse_w2.valid_move(73))
+        self.assertTrue(self.horse_w2.valid_move(71))
+        self.assertFalse(self.horse_w2.valid_move(40))
+        self.assertFalse(self.horse_w2.valid_move(60))
+
+    def test_horse_one_side_block_northern(self):
+        self.horse_w2.position = 23
+        self.assertTrue(self.horse_w2.valid_move(11))
+        self.assertTrue(self.horse_w2.valid_move(31))
+        self.assertTrue(self.horse_w2.valid_move(42))
+        self.assertTrue(self.horse_w2.valid_move(44))
+        self.assertTrue(self.horse_w2.valid_move(35))
+        self.assertTrue(self.horse_w2.valid_move(15))
+        self.assertFalse(self.horse_w2.valid_move(2))
+        self.assertFalse(self.horse_w2.valid_move(4))
+
+        self.horse_w2.position = 27
+        self.assertTrue(self.horse_w2.valid_move(19))
+        self.assertTrue(self.horse_w2.valid_move(39))
+        self.assertTrue(self.horse_w2.valid_move(48))
+        self.assertTrue(self.horse_w2.valid_move(46))
+        self.assertTrue(self.horse_w2.valid_move(35))
+        self.assertTrue(self.horse_w2.valid_move(15))
+        self.assertFalse(self.horse_w2.valid_move(6))
+        self.assertFalse(self.horse_w2.valid_move(8))
+
+        self.horse_w2.position = 25
+        self.assertTrue(self.horse_w2.valid_move(13))
+        self.assertTrue(self.horse_w2.valid_move(33))
+        self.assertTrue(self.horse_w2.valid_move(44))
+        self.assertTrue(self.horse_w2.valid_move(46))
+        self.assertTrue(self.horse_w2.valid_move(37))
+        self.assertTrue(self.horse_w2.valid_move(17))
+        self.assertFalse(self.horse_w2.valid_move(4))
+        self.assertFalse(self.horse_w2.valid_move(6))
+
+    def test_horse_arrive_at_edges(self):
+        self.horse_b1.position = 33
+        self.assertTrue(self.horse_b1.valid_move(12))
+        self.assertTrue(self.horse_b1.valid_move(14))
+        self.assertTrue(self.horse_b1.valid_move(25))
+        self.assertTrue(self.horse_b1.valid_move(45))
+        self.assertTrue(self.horse_b1.valid_move(54))
+        self.assertTrue(self.horse_b1.valid_move(52))
+        self.assertTrue(self.horse_b1.valid_move(41))
+        self.assertTrue(self.horse_b1.valid_move(21))
+
+        self.horse_b1.position = 37
+        self.assertTrue(self.horse_b1.valid_move(16))
+        self.assertTrue(self.horse_b1.valid_move(18))
+        self.assertTrue(self.horse_b1.valid_move(29))
+        self.assertTrue(self.horse_b1.valid_move(49))
+        self.assertTrue(self.horse_b1.valid_move(58))
+        self.assertTrue(self.horse_b1.valid_move(56))
+        self.assertTrue(self.horse_b1.valid_move(45))
+        self.assertTrue(self.horse_b1.valid_move(25))
+
+        self.horse_b1.position = 87
+        self.assertTrue(self.horse_b1.valid_move(66))
+        self.assertTrue(self.horse_b1.valid_move(68))
+        self.assertTrue(self.horse_b1.valid_move(79))
+        self.assertTrue(self.horse_b1.valid_move(99))
+        self.assertTrue(self.horse_b1.valid_move(108))
+        self.assertTrue(self.horse_b1.valid_move(106))
+        self.assertTrue(self.horse_b1.valid_move(95))
+        self.assertTrue(self.horse_b1.valid_move(75))
+
+        self.horse_b1.position = 83
+        self.assertTrue(self.horse_b1.valid_move(62))
+        self.assertTrue(self.horse_b1.valid_move(64))
+        self.assertTrue(self.horse_b1.valid_move(75))
+        self.assertTrue(self.horse_b1.valid_move(95))
+        self.assertTrue(self.horse_b1.valid_move(104))
+        self.assertTrue(self.horse_b1.valid_move(102))
+        self.assertTrue(self.horse_b1.valid_move(91))
+        self.assertTrue(self.horse_b1.valid_move(71))
+
+    def test_horse_normal_position(self):
+        self.horse_b2.position = 44
+        valid_move = [23, 25, 36, 56, 65, 63, 52, 32]
+        for pos in valid_move:
+            self.assertTrue(self.horse_b2.valid_move(pos))
+
+        for loc in range(22, 67):
+            if loc not in valid_move:
+                self.assertFalse(self.horse_b2.valid_move(loc))
+
+        self.horse_b2.position = 46
+        valid_move = [25, 27, 38, 58, 67, 65, 54, 34]
+        for pos in valid_move:
+            self.assertTrue(self.horse_b2.valid_move(pos))
+
+        for loc in range(24, 69):
+            if loc not in valid_move:
+                self.assertFalse(self.horse_b2.valid_move(loc))
+
+        self.horse_b2.position = 76
+        valid_move = [55, 57, 68, 88, 97, 95, 84, 64]
+        for pos in valid_move:
+            self.assertTrue(self.horse_b2.valid_move(pos))
+
+        for loc in range(54, 99):
+            if loc not in valid_move:
+                self.assertFalse(self.horse_b2.valid_move(loc))
+
+        self.horse_b2.position = 74
+        valid_move = [53, 55, 66, 86, 95, 93, 82, 62]
+        for pos in valid_move:
+            self.assertTrue(self.horse_b2.valid_move(pos))
+
+        for loc in range(52, 97):
+            if loc not in valid_move:
+                self.assertFalse(self.horse_b2.valid_move(loc))
+
+        self.horse_b2.position = 65
+        valid_move = [44, 46, 57, 77, 86, 84, 73, 53]
+        for pos in valid_move:
+            self.assertTrue(self.horse_b2.valid_move(pos))
+
+        for loc in range(32, 99):
+            if loc not in valid_move:
+                self.assertFalse(self.horse_b2.valid_move(loc))
+
+        self.horse_b2.position = 55
+        valid_move = [34, 36, 47, 67, 76, 74, 63, 43]
+        for pos in valid_move:
+            self.assertTrue(self.horse_b2.valid_move(pos))
+
+        for loc in range(22, 89):
+            if loc not in valid_move:
+                self.assertFalse(self.horse_b2.valid_move(loc))
+
 
 class TestPawnVerifier(TestCase):
     def setUp(self):
@@ -428,8 +789,12 @@ class TestRockVerifier(TestCase):
                 if 109 >= col >= 11 and col % 10 != 0:
                     for delta in range(1, 10):
                         self.rock_w1.position = col
-                        self.assertTrue(
-                            self.rock_w1.valid_move(col + delta*10))
+                        if self.rock_w1.is_inboard(col + delta*10):
+                            self.assertTrue(
+                                self.rock_w1.valid_move(col + delta*10))
+                        else:
+                            self.assertFalse(
+                                self.rock_w1.valid_move(col + delta*10))
 
     def test_rock_move_horinzontally(self):
         self.assertEqual(self.rock_w1.position, 101)

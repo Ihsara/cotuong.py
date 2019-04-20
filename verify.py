@@ -1,12 +1,13 @@
 import numpy as np
 
 from cotuong_const import start_coords_2, INVALID_POS
-from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY, BOARD_LOC_NUM
-from cotuong_const import MOVE_VERTICALLY_ONE_UNIT_FWD
+from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
+from cotuong_const import MOVE_VERTICALLY_ONE_UNIT_FWD, BOARD_LOC_NUM
 
 '''
 TBD: blocking and eating function => Move to GameState 
 '''
+
 
 class Piece(object):
     def __init__(self, name):
@@ -17,7 +18,7 @@ class Piece(object):
     def is_inboard(self, next_pos=INVALID_POS):
         if next_pos != INVALID_POS and 109 >= next_pos >= 11 and next_pos % 10 != 0:
             return True
-        elif 109 >= self.position >= 11 and self.position % 10 != 0:
+        elif next_pos == INVALID_POS and 109 >= self.position >= 11 and self.position % 10 != 0:
             return True
         else:
             return False
@@ -131,30 +132,35 @@ class Horse(Piece):
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if self.position != next_pos and self.is_inboard(self.position) and self.is_inboard(next_pos) and ((self.position + 8 == next_pos or self.position - 8 == next_pos) or (self.position + 12 == next_pos or self.position - 12 == next_pos) or (self.position + 19 == next_pos or self.position - 19 == next_pos) or (self.position + 21 == next_pos or self.position - 21 == next_pos)):
+        if self.position != next_pos and self.is_inboard() and self.is_inboard(next_pos=next_pos) and ((self.position + 8 == next_pos or self.position - 8 == next_pos) or (self.position + 12 == next_pos or self.position - 12 == next_pos) or (self.position + 19 == next_pos or self.position - 19 == next_pos) or (self.position + 21 == next_pos or self.position - 21 == next_pos)):
             return True
         else:
             return False
 
+
 class Pawn(Piece):
     def __init__(self, name, pos_id=0):
         super().__init__(name)
-        if name.islower(): 
-            self.fwd_only_pos_limit = [ i + 10 for i in self.position]+ self.position
-            self.pos_limit = [i for i in BOARD_LOC_NUM if i >= 61] + self.fwd_only_pos_limit            
-        else:             
-            self.fwd_only_pos_limit = [ i - 10 for i in self.position]+ self.position
-            self.pos_limit = [i for i in BOARD_LOC_NUM if i <= 59] + self.fwd_only_pos_limit
+        if name.islower():
+            self.fwd_only_pos_limit = [
+                i + 10 for i in self.position] + self.position
+            self.pos_limit = [i for i in BOARD_LOC_NUM if i >=
+                              61] + self.fwd_only_pos_limit
+        else:
+            self.fwd_only_pos_limit = [
+                i - 10 for i in self.position] + self.position
+            self.pos_limit = [i for i in BOARD_LOC_NUM if i <=
+                              59] + self.fwd_only_pos_limit
         self.position = self.position[pos_id]
         self.id = name + str(pos_id)
 
     def valid_move(self, next_pos=INVALID_POS):
-        if self.position != next_pos and self.position in self.pos_limit and next_pos in self.pos_limit: 
+        if self.position != next_pos and self.position in self.pos_limit and next_pos in self.pos_limit:
             if self.name.islower() and ((self.is_in_white_territory() and (next_pos - 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos - 10 == self.position)):
-                return True 
+                return True
             elif (self.is_in_black_territory() and (next_pos + 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos + 10 == self.position):
-                return True 
-            else: 
+                return True
+            else:
                 return False
 
 

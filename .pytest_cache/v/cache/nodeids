@@ -20,6 +20,16 @@
   "tests/test_verifier.py::TestElephantVerifier::test_elephant_white_territory",
   "tests/test_verifier.py::TestGeneralVerifier::test_general_black_palace",
   "tests/test_verifier.py::TestGeneralVerifier::test_general_white_palace",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_arrive_at_edges",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_normal_position",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_one_side_block_eastern",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_one_side_block_northern",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_one_side_block_southern",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_one_side_block_western",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_northeast",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_northwest",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_southeast",
+  "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_southwest",
   "tests/test_verifier.py::TestRockVerifier::test_rock_move_horinzontally",
   "tests/test_verifier.py::TestRockVerifier::test_rock_move_vertically"
 ]

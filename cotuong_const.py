@@ -63,7 +63,7 @@ board_matrix = [
     [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 1110]
 ]
 
-BOARD_LOC_NUM = [i for i in range(11, 110) if i%10 != 0]
+BOARD_LOC_NUM = [i for i in range(11, 110) if i % 10 != 0]
 
 BLACK_PALACE_BOUNDARY = [14, 15, 16, 24, 25, 26, 34, 35, 36]
 WHITE_PALACE_BOUNDARY = [84, 85, 86, 94, 95, 96, 104, 105, 106]
