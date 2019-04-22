@@ -64,6 +64,8 @@ board_matrix = [
 ]
 
 BOARD_LOC_NUM = [i for i in range(11, 110) if i % 10 != 0]
+WHITE_TERRITORY_LOC_NUM = [i for i in BOARD_LOC_NUM if i>= 61]
+BLACK_TERRITORY_LOC_NUM = [i for i in BOARD_LOC_NUM if i<= 59]
 
 BLACK_PALACE_BOUNDARY = [14, 15, 16, 24, 25, 26, 34, 35, 36]
 WHITE_PALACE_BOUNDARY = [84, 85, 86, 94, 95, 96, 104, 105, 106]

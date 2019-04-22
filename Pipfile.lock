@@ -58,14 +58,6 @@
             ],
             "version": "==3.0.4"
         },
-        "colorama": {
-            "hashes": [
-                "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d",
-                "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"
-            ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==0.4.1"
-        },
         "coverage": {
             "hashes": [
                 "sha256:3684fabf6b87a369017756b551cef29e505cb155ddb892a7a29277b978da88b9",
@@ -255,14 +247,6 @@
             ],
             "version": "==19.1.0"
         },
-        "colorama": {
-            "hashes": [
-                "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d",
-                "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"
-            ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==0.4.1"
-        },
         "isort": {
             "hashes": [
                 "sha256:01cb7e1ca5e6c5b3f235f0385057f70558b70d2f00320208825fa62887292f43",
@@ -291,6 +275,7 @@
                 "sha256:81304b7d8e9c824d058087dcb89144842c8e0dea6d281c031f59f0acf66963d4",
                 "sha256:933947e8b4fbe617a51528b09851685138b49d511af0b6c0da2539115d6d4514",
                 "sha256:94223d7f060301b3a8c09c9b3bc3294b56b2188e7d8179c762a1cda72c979252",
+                "sha256:a907cfefe8cd876b4879f4d6da335fd386721f4981ba0d0f415fbdbbc2c4cb51",
                 "sha256:ab3ca49afcb47058393b0122428358d2fbe0408cf99f1b58b295cfeb4ed39109",
                 "sha256:bd6292f565ca46dee4e737ebcc20742e3b5be2b01556dafe169f6c65d088875f",
                 "sha256:cb924aa3e4a3fb644d0c463cad5bc2572649a6a3f68a7f8e4fbe44aaa6d77e4c",
@@ -384,7 +369,8 @@
         },
         "wrapt": {
             "hashes": [
-                "sha256:4aea003270831cceb8a90ff27c4031da6ead7ec1886023b80ce0dfe0adf61533"
+                "sha256:4aea003270831cceb8a90ff27c4031da6ead7ec1886023b80ce0dfe0adf61533",
+                "sha256:6379374174bada0eabd8da29c78d310c1682b79045fd28fb9ae4440a6904f016"
             ],
             "version": "==1.11.1"
         }

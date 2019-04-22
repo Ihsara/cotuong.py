@@ -30,6 +30,10 @@
   "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_northwest",
   "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_southeast",
   "tests/test_verifier.py::TestHorseVerifier::test_horse_two_side_blocked_southwest",
+  "tests/test_verifier.py::TestPawnVerifier::test_black_pawn_in_white_territory",
+  "tests/test_verifier.py::TestPawnVerifier::test_pawn_black_in_black_territory",
+  "tests/test_verifier.py::TestPawnVerifier::test_pawn_white_in_white_territory",
+  "tests/test_verifier.py::TestPawnVerifier::test_white_pawn_in_black_territory",
   "tests/test_verifier.py::TestRockVerifier::test_rock_move_horinzontally",
   "tests/test_verifier.py::TestRockVerifier::test_rock_move_vertically"
 ]

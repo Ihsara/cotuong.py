@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\longc\\.virtualenvs\\cotuong-N193LKWW\\Scripts\\python.exe",
+    "python.pythonPath": "/home/longchau/.local/share/virtualenvs/cotuong.py-VUySsV3f/bin/python",
     "python.unitTest.pyTestArgs": [
         "tests"
     ],

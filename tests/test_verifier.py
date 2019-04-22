@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY, board_matrix
+from cotuong_const import BLACK_TERRITORY_LOC_NUM, WHITE_TERRITORY_LOC_NUM
 from verify import Piece, Advisor, Cannon, Elephant, General, Horse, Pawn, Rock
 
 
@@ -770,7 +771,210 @@ class TestPawnVerifier(TestCase):
         self.pawn_b4 = Pawn('p', 3)
         self.pawn_b5 = Pawn('p', 4)
 
+    def test_pawn_white_in_white_territory(self):        
+        for loc in range (60,90): 
+            if loc == 61: 
+                self.assertTrue(self.pawn_w1.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w1.valid_move(loc))
+        
+        for loc in range (60,90): 
+            if loc == 63: 
+                self.assertTrue(self.pawn_w2.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w2.valid_move(loc))
+        
+        for loc in range (60,90): 
+            if loc == 65: 
+                self.assertTrue(self.pawn_w3.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w3.valid_move(loc))
+        
+        for loc in range (60,90): 
+            if loc == 67: 
+                self.assertTrue(self.pawn_w4.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w4.valid_move(loc))
+        
+        for loc in range (60,90): 
+            if loc == 69: 
+                self.assertTrue(self.pawn_w5.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w5.valid_move(loc))
+        
+        self.pawn_w1.position = 61
+        self.pawn_w2.position = 63
+        self.pawn_w3.position = 65
+        self.pawn_w4.position = 67
+        self.pawn_w5.position = 69
 
+        for loc in range (50,80): 
+            if loc == 51: 
+                self.assertTrue(self.pawn_w1.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w1.valid_move(loc))
+        
+        for loc in range (50,80): 
+            if loc == 53: 
+                self.assertTrue(self.pawn_w2.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w2.valid_move(loc))
+        
+        for loc in range (50,80): 
+            if loc == 55: 
+                self.assertTrue(self.pawn_w3.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w3.valid_move(loc))
+        
+        for loc in range (50,80): 
+            if loc == 57: 
+                self.assertTrue(self.pawn_w4.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w4.valid_move(loc))
+        
+        for loc in range (50,80): 
+            if loc == 59: 
+                self.assertTrue(self.pawn_w5.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_w5.valid_move(loc))
+
+    def test_pawn_black_in_black_territory(self):        
+        for loc in range (30,60): 
+            if loc == 51: 
+                self.assertTrue(self.pawn_b1.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b1.valid_move(loc))
+        
+        for loc in range (30,60): 
+            if loc == 53: 
+                self.assertTrue(self.pawn_b2.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b2.valid_move(loc))
+        
+        for loc in range (30,60): 
+            if loc == 55: 
+                self.assertTrue(self.pawn_b3.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b3.valid_move(loc))
+        
+        for loc in range (30,60): 
+            if loc == 57: 
+                self.assertTrue(self.pawn_b4.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b4.valid_move(loc))
+        
+        for loc in range (30,60): 
+            if loc == 59: 
+                self.assertTrue(self.pawn_b5.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b5.valid_move(loc))
+        
+        self.pawn_b1.position = 51
+        self.pawn_b2.position = 53
+        self.pawn_b3.position = 55
+        self.pawn_b4.position = 57
+        self.pawn_b5.position = 59
+
+        for loc in range (40,70): 
+            if loc == 61: 
+                self.assertTrue(self.pawn_b1.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b1.valid_move(loc))
+        
+        for loc in range (40,70): 
+            if loc == 63: 
+                self.assertTrue(self.pawn_b2.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b2.valid_move(loc))
+        
+        for loc in range (40,70): 
+            if loc == 65: 
+                self.assertTrue(self.pawn_b3.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b3.valid_move(loc))
+        
+        for loc in range (40,70): 
+            if loc == 67: 
+                self.assertTrue(self.pawn_b4.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b4.valid_move(loc))
+        
+        for loc in range (40,70): 
+            if loc == 69: 
+                self.assertTrue(self.pawn_b5.valid_move(loc))
+            else: 
+                self.assertFalse(self.pawn_b5.valid_move(loc))
+
+    def test_white_pawn_in_black_territory(self):
+        for loc in BLACK_TERRITORY_LOC_NUM: 
+            self.pawn_w1.position = loc 
+            if loc%10 != 1 and loc%10 != 9 and loc >= 22:                 
+                if not self.pawn_w1.valid_move(loc - 10):
+                    print (loc-10, self.pawn_w1.position)
+                self.assertTrue(self.pawn_w1.valid_move(loc + 1))
+                self.assertTrue(self.pawn_w1.valid_move(loc - 1))
+                self.assertTrue(self.pawn_w1.valid_move(loc - 10))
+                for loc2 in BLACK_TERRITORY_LOC_NUM: 
+                    if loc2 != loc + 1 and loc2 != loc - 1 and loc2 != loc - 10: 
+                        self.assertFalse(self.pawn_w1.valid_move(loc2))
+            elif loc%10 == 1:
+                if loc == 11:                     
+                    self.assertTrue(self.pawn_w1.valid_move(loc + 1))
+                    self.assertFalse(self.pawn_w1.valid_move(loc - 1))
+                    self.assertFalse(self.pawn_w1.valid_move(loc - 10))
+                else:                     
+                    self.assertTrue(self.pawn_w1.valid_move(loc + 1))
+                    self.assertFalse(self.pawn_w1.valid_move(loc - 1))
+                    self.assertTrue(self.pawn_w1.valid_move(loc - 10))   
+            elif loc%10 == 9: 
+                if loc == 19:                    
+                    self.assertFalse(self.pawn_w1.valid_move(loc + 1))
+                    self.assertTrue(self.pawn_w1.valid_move(loc - 1))
+                    self.assertFalse(self.pawn_w1.valid_move(loc - 10))
+                else:                     
+                    self.assertFalse(self.pawn_w1.valid_move(loc + 1))
+                    self.assertTrue(self.pawn_w1.valid_move(loc - 1))
+                    self.assertTrue(self.pawn_w1.valid_move(loc - 10))  
+            elif loc in range(12, 19): 
+                self.assertTrue(self.pawn_w1.valid_move(loc + 1))
+                self.assertTrue(self.pawn_w1.valid_move(loc - 1))
+                self.assertFalse(self.pawn_w1.valid_move(loc - 10))                    
+
+    def test_black_pawn_in_white_territory(self):
+        for loc in WHITE_TERRITORY_LOC_NUM: 
+            self.pawn_b1.position = loc 
+            if loc%10 != 1 and loc%10 != 9 and loc <= 98:                 
+                if not self.pawn_b1.valid_move(loc + 1):
+                    print (loc+1, self.pawn_b1.position)
+                self.assertTrue(self.pawn_b1.valid_move(loc + 1))
+                self.assertTrue(self.pawn_b1.valid_move(loc - 1))
+                self.assertTrue(self.pawn_b1.valid_move(loc + 10))
+                for loc2 in WHITE_TERRITORY_LOC_NUM: 
+                    if loc2 != loc + 1 and loc2 != loc - 1 and loc2 != loc + 10: 
+                        self.assertFalse(self.pawn_b1.valid_move(loc2))
+            elif loc%10 == 1:
+                if loc == 101:                     
+                    self.assertTrue(self.pawn_b1.valid_move(loc + 1))
+                    self.assertFalse(self.pawn_b1.valid_move(loc - 1))
+                    self.assertFalse(self.pawn_b1.valid_move(loc + 10))
+                else:                     
+                    self.assertTrue(self.pawn_b1.valid_move(loc + 1))
+                    self.assertFalse(self.pawn_b1.valid_move(loc - 1))
+                    self.assertTrue(self.pawn_b1.valid_move(loc + 10))   
+            elif loc%10 == 9: 
+                if loc == 109:                    
+                    self.assertFalse(self.pawn_b1.valid_move(loc + 1))
+                    self.assertTrue(self.pawn_b1.valid_move(loc - 1))
+                    self.assertFalse(self.pawn_b1.valid_move(loc + 10))
+                else:                     
+                    self.assertFalse(self.pawn_b1.valid_move(loc + 1))
+                    self.assertTrue(self.pawn_b1.valid_move(loc - 1))
+                    self.assertTrue(self.pawn_b1.valid_move(loc + 10)) 
+            elif loc in range(102, 109): 
+                self.assertTrue(self.pawn_b1.valid_move(loc + 1))
+                self.assertTrue(self.pawn_b1.valid_move(loc - 1))
+                self.assertFalse(self.pawn_b1.valid_move(loc + 10))                                                    
+        
 class TestRockVerifier(TestCase):
     def setUp(self):
         self.rock_w1 = Rock('R', 0)

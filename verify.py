@@ -3,6 +3,7 @@ import numpy as np
 from cotuong_const import start_coords_2, INVALID_POS
 from cotuong_const import BLACK_PALACE_BOUNDARY, WHITE_PALACE_BOUNDARY
 from cotuong_const import MOVE_VERTICALLY_ONE_UNIT_FWD, BOARD_LOC_NUM
+from cotuong_const import BLACK_TERRITORY_LOC_NUM, WHITE_TERRITORY_LOC_NUM
 
 '''
 TBD: blocking and eating function => Move to GameState 
@@ -144,13 +145,11 @@ class Pawn(Piece):
         if name.islower():
             self.fwd_only_pos_limit = [
                 i + 10 for i in self.position] + self.position
-            self.pos_limit = [i for i in BOARD_LOC_NUM if i >=
-                              61] + self.fwd_only_pos_limit
+            self.pos_limit = WHITE_TERRITORY_LOC_NUM + self.fwd_only_pos_limit
         else:
             self.fwd_only_pos_limit = [
                 i - 10 for i in self.position] + self.position
-            self.pos_limit = [i for i in BOARD_LOC_NUM if i <=
-                              59] + self.fwd_only_pos_limit
+            self.pos_limit = BLACK_TERRITORY_LOC_NUM + self.fwd_only_pos_limit
         self.position = self.position[pos_id]
         self.id = name + str(pos_id)
 
@@ -158,10 +157,11 @@ class Pawn(Piece):
         if self.position != next_pos and self.position in self.pos_limit and next_pos in self.pos_limit:
             if self.name.islower() and ((self.is_in_white_territory() and (next_pos - 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos - 10 == self.position)):
                 return True
-            elif (self.is_in_black_territory() and (next_pos + 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos + 10 == self.position):
+            elif self.name.isupper() and ((self.is_in_black_territory() and (next_pos + 10 == self.position or next_pos - 1 == self.position or next_pos + 1 == self.position)) or (self.position in self.fwd_only_pos_limit and next_pos + 10 == self.position)):
                 return True
             else:
                 return False
+        else: return False
 
 
 class Rock(Piece):
