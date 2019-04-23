@@ -8,6 +8,39 @@ horse = 'h'
 pawn = 'p'
 rock = 'r'
 
+OFFICIAL_NAMES = {
+    'a': 'Advisor', 
+    'c': 'Cannon', 
+    'e': 'Elephant', 
+    'g': 'General',
+    'h': 'Horse',
+    'p': 'Pawn',
+    'r': 'Rock'
+}
+
+DESTINATION = 'destination'
+VERTICAL = 'vertical'
+HORIZONTAL = 'horizontal'
+DIAGONAL_LEFT_DESC = 'diagonal_left_descend_to_right'
+DIAGONAL_LEFT_ASCE = 'diagonal_right_ascend_to_right'
+LSHAPE = 'lshape'
+BLOCKING_TYPES = {
+    1: DESTINATION,
+    2: VERTICAL,
+    3: HORIZONTAL,
+    4: DIAGONAL_LEFT_DESC,
+    5: DIAGONAL_LEFT_ASCE,
+    6: LSHAPE
+}
+BLOCKING_RULES = {
+    DESTINATION: lambda curr_pos, target_pos: [target_pos], 
+    VERTICAL: lambda curr_pos, target_pos: list(range(curr_pos, target_pos+1, 10)) if target_pos > curr_pos else list(range(target_pos, curr_pos+1, 10)),
+    HORIZONTAL: lambda curr_pos, target_pos: list(range(curr_pos, target_pos+1)) if target_pos > curr_pos else list(range(target_pos, curr_pos+1)),
+    DIAGONAL_LEFT_DESC: lambda curr_pos, target_pos: list(range(curr_pos, target_pos, 11)) if target_pos > curr_pos else list(range(target_pos, curr_pos, 11)),
+    DIAGONAL_LEFT_ASCE: lambda curr_pos, target_pos: list(range(curr_pos, target_pos, 9)) if target_pos > curr_pos else list(range(target_pos, curr_pos, 9)),
+    LSHAPE: lambda curr_pos, target_pos: [curr_pos + 1] if target_pos%10 - 2 == curr_pos%10 else ([curr_pos -1] if target_pos%10 + 2 == curr_pos%10 else([curr_pos -10] if target_pos//10 - 2 == curr_pos//10 else [curr_pos + 10]))
+}
+
 INVALID_POS = -1110
 
 start_coords = {
