@@ -1,4 +1,4 @@
-from cotuong_const import board_matrix, start_coords_2
+from cotuong_const import board_matrix, start_coords_2, INVALID_POS
 from copy import deepcopy
 from verify import Advisor, Cannon, Elephant, General, Horse, Pawn, Rock
 
@@ -40,6 +40,9 @@ class GameState(object):
 
     def __generate_piece_list(self):
         return [piece for piece_name in self.SYMBOLS for piece in self.__generate_piece_list_from_position_list(piece_name)]
+
+    def __generate_simple_current_turn_state(self):
+        return [piece.current_state for piece in self.piece_list]
 
     def __new_game(self):
         self.next_move = 'w'
@@ -100,7 +103,7 @@ class GameState(object):
         return 
 
     def __update_history(self):
-        pass
+        self.history.append(self.__generate_simple_current_turn_state())
 
     def update_move(self, piece_id, next_pos):
         is_updated = False 
@@ -121,6 +124,15 @@ class GameState(object):
             print('No piece with this id')
 
         return is_updated
+
+    def turn_mananger(self, move={'piece_id': '', 'next_pos': INVALID_POS}):
+        if self.update_move(piece_id=move['piece_id'], next_pos=move['next_pos']):
+            self.__update_history() 
+            if move['piece_id'][0].islower(): 
+                self.next_move = 'w'
+            else: 
+                self.next_move = 'b'
+                self.turn += 1 
 
 if __name__ == "__main__": 
     from pprint import PrettyPrinter as pp 

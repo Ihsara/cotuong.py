@@ -59,6 +59,9 @@ class Piece(object):
     def set_move(self, next_pos):
         return next_pos if self.valid_move(next_pos) else self.position
 
+    def current_state(self):
+        return {self.id: self.position}
+
     def __repr__(self):
         return '{}.id {}: {}'.format(OFFICIAL_NAMES[self.name.lower()],self.id, self.position)
 
