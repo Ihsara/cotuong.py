@@ -10,3 +10,4 @@ coverage.xml
 .ipynb_checkpoints/ 
 
 .vscode/
+.vscode/settings.json
