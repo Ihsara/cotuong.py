@@ -1,10 +1,10 @@
 {
     "python.pythonPath": "/home/longchau/.local/share/virtualenvs/cotuong.py-VUySsV3f/bin/python",
-    "python.unitTest.pyTestArgs": [
+    "python.testing.pyTestArgs": [
         "tests"
     ],
-    "python.unitTest.unittestEnabled": false,
-    "python.unitTest.nosetestsEnabled": false,
-    "python.unitTest.pyTestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pyTestEnabled": true,
     "python.linting.pylintEnabled": true
 }

@@ -1,0 +1,37 @@
+<h1 id="cotuong-py-th-vi-n-d-nh-cho-c-t-ng">cotuong.py - Thư viện dành cho cờ tướng</h1>
+<p><a href="https://travis-ci.org/Ihsara/cotuong.py"><img src="https://travis-ci.org/Ihsara/cotuong.py.svg?branch=master" alt="Build Status"></a></p>
+<p>Đây là một thư viện cho cờ tướng nhằm đơn giản và thúc đẩy khi dùng python để tương tác với cờ tướng</p>
+<h1 id="c-i-t">Cài đặt</h1>
+<p>cotuong.py dùng python 3.7.x và <a href="https://github.com/pypa/pipenv">pipenv</a> để thiết đặt môi trường </p>
+<pre><code class="lang-sh">cd cotuong<span class="hljs-selector-class">.py</span> 
+pipenv install
+pipenv shell
+py<span class="hljs-selector-class">.test</span> tests/
+</code></pre>
+<h1 id="s-d-ng">Sử dụng</h1>
+<h2 id="t-o-v-n-c-m-i">Tạo ván cờ mới</h2>
+<pre><code class="lang-python">from cotuong import <span class="hljs-symbol">GameState</span>
+
+chesspiece_pos = {<span class="hljs-string">'A'</span>: [<span class="hljs-number">104</span>, <span class="hljs-number">106</span>], <span class="hljs-string">'C'</span>: [<span class="hljs-number">82</span>, <span class="hljs-number">88</span>], <span class="hljs-string">'E'</span>: [<span class="hljs-number">103</span>, <span class="hljs-number">107</span>], <span class="hljs-string">'G'</span>: [<span class="hljs-number">105</span>], <span class="hljs-string">'H'</span>: [<span class="hljs-number">102</span>, <span class="hljs-number">108</span>], <span class="hljs-string">'P'</span>: [<span class="hljs-number">71</span>, <span class="hljs-number">73</span>, <span class="hljs-number">75</span>, <span class="hljs-number">77</span>, <span class="hljs-number">79</span>], <span class="hljs-string">'R'</span>: [<span class="hljs-number">101</span>, <span class="hljs-number">109</span>], <span class="hljs-string">'a'</span>: [<span class="hljs-number">14</span>, <span class="hljs-number">16</span>], <span class="hljs-string">'c'</span>: [<span class="hljs-number">32</span>, <span class="hljs-number">38</span>], <span class="hljs-string">'e'</span>: [<span class="hljs-number">13</span>, <span class="hljs-number">17</span>], <span class="hljs-string">'g'</span>: [<span class="hljs-number">15</span>], <span class="hljs-string">'h'</span>: [<span class="hljs-number">12</span>, <span class="hljs-number">18</span>], <span class="hljs-string">'p'</span>: [<span class="hljs-number">41</span>, <span class="hljs-number">43</span>, <span class="hljs-number">45</span>, <span class="hljs-number">47</span>, <span class="hljs-number">49</span>], <span class="hljs-string">'r'</span>: [<span class="hljs-number">11</span>, <span class="hljs-number">19</span>]}
+
+<span class="hljs-symbol">FEN_starting_pos</span> = <span class="hljs-string">"rheagaehr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RHEAGAEHR w 1"</span>
+
+new_game = <span class="hljs-symbol">GameState</span>() #<span class="hljs-symbol">V</span>án mới hoàn toàn. <span class="hljs-symbol">Qu</span>ân cờ ở vị trí khai cuộc mở màn
+new_game_2 = <span class="hljs-symbol">GameState</span>(load= <span class="hljs-symbol">FEN_starting_pos</span>) #<span class="hljs-symbol">Kh</span>ởi tạo ván cờ từ dãy <span class="hljs-symbol">FEN</span>. <span class="hljs-symbol">TBD</span>
+new_game_3 = <span class="hljs-symbol">GameState</span>(load=chesspiece_pos) #<span class="hljs-symbol">Kh</span>ởi tạo ván cờ từ từ điển. <span class="hljs-symbol">TBD</span>
+</code></pre>
+<h2 id="ki-m-tra-n-c-c-h-p-l-hay-kh-ng">Kiểm tra nước cờ hợp lệ hay không</h2>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> verify <span class="hljs-keyword">import</span> Advisor <span class="hljs-comment">#Quân cờ nào cần kiểm tra</span>
+</code></pre>
+<h1 id="c-n-ph-i-l-m">Cần phải làm</h1>
+<ul>
+<li>[ ] Kiểm nước cờ hợp lệ</li>
+<li>[ ] Tạo ván cờ từ FEN </li>
+<li>[ ] Tạo ván cờ từ điển</li>
+<li>[ ] Phỏng đoán thế cờ</li>
+<li>[ ] Đánh giá thế cờ hiện tại</li>
+<li>[ ] Cập nhật jupyter-notebook cho cách sử dụng</li>
+<li>[ ] Đọc nguyên ván cờ từ file json</li>
+<li>[ ] Đánh giá hiệu năng khi xử lý số lượng lớn</li>
+<li>[ ] Tìm hiểu thêm tính năng cần thiết khác</li>
+</ul>
